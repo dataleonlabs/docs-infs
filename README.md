@@ -1,4 +1,4 @@
-# Iron iron-docs documentations
+# Iron docs documentations
 
 ## Opening issues
 
