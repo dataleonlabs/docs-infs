@@ -879,5 +879,5 @@ schemes:
 # host: inference.eu-west-1.dataleon.ai
 # basePath: /sba
 # Added by API Auto Mocking Plugin
-host: too-inference.eu-west-1.dataleon.ai
-basePath: /sba-too
+host: test-inference.eu-west-1.dataleon.ai
+basePath: /sba-test
