@@ -15,7 +15,7 @@ info:
     - The PDF dimensions must be at most 17 x 17 inches, corresponding to legal or A3 paper sizes and smaller.
 
   version: 3.0.0
-  title: SBA - API Inference
+  title: SBA Compta - API Inference
   termsOfService: https://youngapp.co/terms-of-use
   contact:
     email: support@dataleon.ai
