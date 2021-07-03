@@ -1,0 +1,883 @@
+swagger: '2.0'
+info:
+  description: |
+    SBA API is structured around REST. Having predictable resource-oriented URLs, our APIs accept form-encoded request bodies, return JSON responses, and use standard HTTP response codes, authentication, and verbs.
+    
+    ### Supported document formats
+    YAP currently supports PNG, JPEG, and PDF, TIFF, XLSX  formats.
+
+    ### File size
+    Image files sent to the YAP API should not exceed 100 MB (4 MB for the free tier). Reducing your file size can significantly improve throughput; however, be careful not to reduce image quality in the process.
+    
+    ### Image and PDF requirements
+    - For PDF and TIFF files, up to 2000 pages (only first two pages for the free tier) are processed.
+    - Dimensions at least 50 x 50 pixels and at most 10000 x 10000 pixels.
+    - The PDF dimensions must be at most 17 x 17 inches, corresponding to legal or A3 paper sizes and smaller.
+
+  version: 3.0.0
+  title: SBA - API Inference
+  termsOfService: https://youngapp.co/terms-of-use
+  contact:
+    email: support@dataleon.ai
+
+
+tags:
+- name: Document Understanding
+  description: Document understanding IA
+  
+- name: Extraction entities
+  description: Document understanding IA
+    
+# schemes:
+# - http
+paths:
+  /multi-receipt:
+    post:
+      tags:
+      - Document Understanding
+      summary: Detect if document content one or several receipt.
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: input_file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: state
+        in: formData
+        description: Data send to your webhook on query
+        required: false
+        type: string
+      - name: callback_url
+        in: header
+        description: You receive result on webhook when result
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/MultipleReceipt'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+
+  /document-generics:
+    post:
+      tags:
+      - Document Understanding
+      summary: combine routes multi-receipt, image-quality check-duplicates, due-date, handwriting
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: input_file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: state
+        in: formData
+        description: Data send to your webhook on query
+        required: false
+        type: string
+      - name: callback_url
+        in: header
+        description: You receive result on webhook when result
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Quality'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+      
+  /image-quality:
+    post:
+      tags:
+      - Document Understanding
+      summary: Remove document already useon server
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: input_file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: state
+        in: formData
+        description: Data send to your webhook on query
+        required: false
+        type: string
+      - name: callback_url
+        in: header
+        description: You receive result on webhook when result
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Quality'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+
+  /check-duplicates:
+    post:
+      tags:
+      - Document Understanding
+      summary: Find if one document already exist on database.
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: input_file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: state
+        in: formData
+        description: Data send to your webhook on query
+        required: false
+        type: string
+      - name: callback_url
+        in: header
+        description: You receive result on webhook when result
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/DuplicateDocument'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+      
+  /document/remove:
+    post:
+      tags:
+      - Document Understanding
+      summary: Remove document already useon server
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: input_file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: state
+        in: formData
+        description: Data send to your webhook on query
+        required: false
+        type: string
+      - name: callback_url
+        in: header
+        description: You receive result on webhook when result
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Entity'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+      
+  /classification:
+    post:
+      tags:
+      - Document Understanding
+      summary: Classification document
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: input_file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: state
+        in: formData
+        description: Data send to your webhook on query
+        required: false
+        type: string
+      - name: callback_url
+        in: header
+        description: You receive result on webhook when result
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Quality'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+      
+  /due-date:
+    post:
+      tags:
+      - Extraction entities
+      summary: Retrieve invoice due date on document
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: input_file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: state
+        in: formData
+        description: Data send to your webhook on query
+        required: false
+        type: string
+      - name: callback_url
+        in: header
+        description: You receive result on webhook when result
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Duedate'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+      
+  /handwriting:
+    post:
+      tags:
+      - Document Understanding
+      summary: Detect handwriting on document
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: input_file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: state
+        in: formData
+        description: Data send to your webhook on query
+        required: false
+        type: string
+      - name: callback_url
+        in: header
+        description: You receive result on webhook when result
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Handwriting'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+      
+  /cheque:
+    post:
+      tags:
+      - Extraction entities
+      summary: Extract entities on check
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: input_file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: state
+        in: formData
+        description: Data send to your webhook on query
+        required: false
+        type: string
+      - name: callback_url
+        in: header
+        description: You receive result on webhook when result
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Handwriting'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+      
+  /avis:
+    post:
+      tags:
+      - Extraction entities
+      summary: Extract entities on avis de virement
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: input_file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: state
+        in: formData
+        description: Data send to your webhook on query
+        required: false
+        type: string
+      - name: callback_url
+        in: header
+        description: You receive result on webhook when result
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Handwriting'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+      
+  /bank-statement:
+    post:
+      tags:
+      - Extraction entities
+      summary: Extract entities on bank-statement
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: input_file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: state
+        in: formData
+        description: Data send to your webhook on query
+        required: false
+        type: string
+      - name: callback_url
+        in: header
+        description: You receive result on webhook when result
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Handwriting'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+      
+  /invoice:
+    post:
+      tags:
+      - Extraction entities
+      summary: Extract entities on invoice
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: input_file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: state
+        in: formData
+        description: Data send to your webhook on query
+        required: false
+        type: string
+      - name: callback_url
+        in: header
+        description: You receive result on webhook when result
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Handwriting'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+      
+  /prelevement:
+    post:
+      tags:
+      - Extraction entities
+      summary: Extract entities on prelevement
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: input_file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: state
+        in: formData
+        description: Data send to your webhook on query
+        required: false
+        type: string
+      - name: callback_url
+        in: header
+        description: You receive result on webhook when result
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Handwriting'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+      
+  /carte-bancaire-recu:
+    post:
+      tags:
+      - Extraction entities
+      summary: Extract entities on carte bancaire recu
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: input_file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: state
+        in: formData
+        description: Data send to your webhook on query
+        required: false
+        type: string
+      - name: callback_url
+        in: header
+        description: You receive result on webhook when result
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Handwriting'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+
+  /tasks/{Id}:
+    get:
+      tags:
+      - Operating
+      summary: Large file offline processing
+      description: Asynchronous ("offline") requests target longer documents. These types of requests start a long-running operations. When this operation finishes it stores output as a JSON file in a specified Young App Platform.
+      
+      
+        When the status field has the succeeded value, the JSON response contains the extracted text content from your image or document. 
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Id
+        in: path
+        description: ID of task
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        404:
+          description: The requested workfow doesn't exist.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: Api-Key
+    in: header
+
+definitions:
+  MultipleReceipt:
+    type: object
+    properties:
+      class: 
+        type: array
+        items: 
+          type: object
+          properties: 
+            id: 
+              type: string
+              example: 5a9278a60cd211eba1b93a1350d1ea81
+            name: 
+              type: string
+              example: multiple
+            value: 
+              type: integer
+              format: int32
+              example: 1
+            confidence: 
+              type: number
+              example: 0.9
+  Entity:
+    type: object
+    properties:
+      metadata: 
+        type: object
+        properties: 
+          document_name: 
+            type: string
+            format: nullable
+          status: 
+            type: string
+            example: successful
+            
+  DuplicateDocument:
+    type: object
+    properties:
+      class: 
+        type: array
+        items: 
+          type: object
+          properties: 
+            id: 
+              type: string
+              example: 5a9278a60cd211eba1b93a1350d1ea81
+            name: 
+              type: string
+              example: duplicate
+            value: 
+              type: integer
+              format: int32
+              example: 1
+            confidence: 
+              type: number
+              example: 0.9
+      metadata: 
+        type: object
+        properties: 
+          document_name: 
+            type: string
+            format: nullable
+          status: 
+            type: string
+            example: successful
+            
+  Quality:
+    type: object
+    properties:
+      class: 
+        type: array
+        items: 
+          type: object
+          properties: 
+            id: 
+              type: string
+              example: 5a9278a60cd211eba1b93a1350d1ea81
+            name: 
+              type: string
+              example: quality
+            value: 
+              type: integer
+              format: int32
+              example: 1
+            confidence: 
+              type: number
+              example: 0.9
+      metadata: 
+        type: object
+        properties: 
+          document_name: 
+            type: string
+            format: nullable
+          status: 
+            type: string
+            example: successful
+            
+  Handwriting:
+    type: object
+    properties:
+      entities: 
+        type: array
+        items: 
+          type: object
+          properties: 
+            id: 
+              type: string
+              example: 5a9278a60cd211eba1b93a1350d1ea81
+            name: 
+              type: string
+              example: handwriting
+            confidence: 
+              type: number
+              example: 0.9
+            bounding_box: 
+              type: array
+              items: 
+                type: array
+                items: 
+                  type: integer
+                  format: int32
+                  example: 51
+      metadata: 
+        type: object
+        properties: 
+          document_name: 
+            type: string
+            format: nullable
+          status: 
+            type: string
+            example: successful
+  
+  Duedate:
+    type: object
+    properties:
+      entities: 
+        type: array
+        items: 
+          type: object
+          properties: 
+            id: 
+              type: string
+              example: 5a9278a60cd211eba1b93a1350d1ea81
+            name: 
+              type: string
+              example: due_date
+            text: 
+              type: string
+              example: 12/12/2021
+            value: 
+              type: integer
+              format: int32
+              example: 1241244040
+            confidence: 
+              type: number
+              example: 0.9
+            bounding_box: 
+              type: array
+              items: 
+                type: array
+                items: 
+                  type: integer
+                  format: int32
+                  example: 51
+      metadata: 
+        type: object
+        properties: 
+          document_name: 
+            type: string
+            format: nullable
+          status:
+            type: string
+            example: successful
+
+  ApiResponse:
+    type: object
+    properties:
+      status:
+        example: "notStarted|running|failed|succeeded"
+        type: string
+
+# Added by API Auto Mocking Plugin
+# host: cognitive.youngapp.co
+schemes:
+ - https
+# Added by API Auto Mocking Plugin
+# basePath: /v2
+# Added by API Auto Mocking Plugin
+# host: inference.eu-west-1.dataleon.ai
+# basePath: /sba
+# Added by API Auto Mocking Plugin
+host: inference.eu-west-1.dataleon.ai
+basePath: /sba
