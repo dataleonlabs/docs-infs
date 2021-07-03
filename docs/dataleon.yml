@@ -1,0 +1,459 @@
+swagger: '2.0'
+info:
+  description: |
+    Dataleon Platform API is structured around REST. Having predictable resource-oriented URLs, our APIs accept form-encoded request bodies, return JSON responses, and use standard HTTP response codes, authentication, and verbs.
+    
+    ### Supported document formats
+    Dataleon currently supports PNG, JPEG, and PDF, TIFF formats.
+
+    ### File size
+    Image files sent to the Dataleon API should not exceed 100 MB (4 MB for the free tier). Reducing your file size can significantly improve throughput; however, be careful not to reduce image quality in the process.
+    
+    ### Image and PDF requirements
+    - For PDF and TIFF files, up to 2000 pages (only first two pages for the free tier) are processed.
+    - Dimensions at least 50 x 50 pixels and at most 10000 x 10000 pixels.
+    - The PDF dimensions must be at most 17 x 17 inches, corresponding to legal or A3 paper sizes and smaller.
+
+  version: 3.0.0
+  title: Dataleon - API Inference
+  termsOfService: https://dataleon.ai/terms-of-use
+  contact:
+    email: support@youngapp-platform.zendesk.com
+
+
+tags:
+- name: Document API
+  description: Document understanding IA
+    
+# schemes:
+# - http
+paths:
+  /invoice:
+    post:
+      tags:
+      - Document API
+      summary: Extracting data invoices (bills)
+      description: Dataleon AI allows you to take invoices in a variety of formats and return structured data to reduce manual document processing.
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: callback_url
+        in: formData
+        description: Offline processing
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Entity'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+
+  /receipt:
+    post:
+      tags:
+      - Document API
+      summary: Extracting data from receipts
+      description: Dataleon AI allows you to take receipt in a variety of formats and return structured data to reduce manual document processing.
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: callback_url
+        in: formData
+        description: Offline processing
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Entity'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+      
+  /liasse-fiscale:
+    post:
+      tags:
+      - Document API
+      summary: Extracting data from liasse fiscale
+      description: Dataleon AI allows you to take liasse fiscale in a variety of formats and return structured data to reduce manual document processing.
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: callback_url
+        in: formData
+        description: Offline processing
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Liasse'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+
+  /bank-statements:
+    post:
+      tags:
+      - Document API
+      summary: Receiving raw editable transactions
+      description: Dataleon AI allows you to take bank-statements in a variety of formats and return structured data to reduce manual document processing.
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: callback_url
+        in: formData
+        description: Offline processing
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Transaction'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+        
+
+  /tasks/{Id}:
+    get:
+      tags:
+      - Operating
+      summary: Large file offline processing
+      description: Asynchronous ("offline") requests target longer documents. These types of requests start a long-running operations. When this operation finishes it stores output as a JSON file in a specified Young App Platform.
+      
+      
+        When the status field has the succeeded value, the JSON response contains the extracted text content from your image or document. 
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Id
+        in: path
+        description: ID of task
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        404:
+          description: The requested workfow doesn't exist.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+
+securityDefinitions:
+  api_key:
+    type: apiKey
+    name: Api-Key
+    in: header
+
+definitions:
+  Entity:
+    type: object
+    properties:
+      blocks: 
+        type: array
+        items: 
+          type: object
+          properties: 
+            id: 
+              type: string
+              example: 5a9278a60cd211eba1b93a1350d1ea81
+            text: 
+              type: string
+              example: 12445 EUR
+            confidence: 
+              type: number
+              example: 0.9
+            bounding_box: 
+              type: array
+              items: 
+                type: array
+                items: 
+                  type: number
+                  example: 51
+      fulltext: 
+        type: string
+        example: total 12...
+      entities: 
+        type: array
+        items: 
+          type: object
+          properties: 
+            id: 
+              type: string
+              example: 5a9278a60cd211eba1b93a1350d1ea81
+            name: 
+              type: string
+              example: total
+            text: 
+              type: string
+              example: 12445 EUR
+            value: 
+              type: number
+              example: 124.45
+            confidence: 
+              type: number
+              example: 0.9
+            bounding_box: 
+              type: array
+              items: 
+                type: array
+                items: 
+                  type: number
+                  example: 51
+      metadata: 
+        type: object
+        properties:  
+          company_name: 
+            type: string
+            example: 
+          status: 
+            type: string
+            example: successful
+  Liasse:
+    type: object
+    properties:
+      blocks: 
+        type: array
+        items: 
+          type: object
+          properties: 
+            id: 
+              type: string
+              example: 5a9278a60cd211eba1b93a1350d1ea81
+            text: 
+              type: string
+              example: 12445
+            confidence: 
+              type: number
+              example: 0.9
+            bounding_box: 
+              type: array
+              items: 
+                type: array
+                items: 
+                  type: number
+                  example: 51
+      fulltext: 
+        type: string
+        example: total 12...
+      entities: 
+        type: array
+        items: 
+          type: object
+          properties: 
+            id: 
+              type: string
+              example: 5a9278a60cd211eba1b93a1350d1ea81
+            name: 
+              type: string
+              example: AA
+            text: 
+              type: string
+              example: 12445
+            value: 
+              type: number
+              example: 12445
+            confidence: 
+              type: number
+              example: 0.9
+            bounding_box: 
+              type: array
+              items: 
+                type: array
+                items: 
+                  type: number
+                  example: 51
+
+  ApiResponse:
+    type: object
+    properties:
+      status:
+        example: "notStarted|running|failed|succeeded"
+        type: string
+  Transaction:
+    type: object
+    properties:
+      blocks: 
+        type: array
+        items: 
+          type: object
+          properties: 
+            text: 
+              type: string
+              example: RELEVE
+            bounding_box: 
+              type: array
+              items: 
+                type: array
+                items: 
+                  type: number
+                  example: 84
+            id: 
+              type: string
+              example: b588487d-dead-48bd-ad46-d757fd371b81
+      transactions: 
+        type: array
+        items: 
+          type: object
+          properties: 
+            id: 
+              type: string
+              example: d93531f0-92b3-4ac8-9334-1ff11d9b6d32
+            bounding_box: 
+              type: array
+              items: 
+                type: array
+                items: 
+                  type: number
+                  example: 84.23780696094036
+            cells: 
+              type: array
+              items: 
+                type: object
+                properties: 
+                  confidence: 
+                    type: number
+                    example: 1
+                  id: 
+                    type: string
+                    example: 5bdaff58-ff4c-4a04-b959-0f35936f69fb
+                  name: 
+                    type: string
+                    example: "date|credit|debit|label"
+                  text: 
+                    type: string
+                    example: 18/08/2020
+                  value: 
+                    type: string
+                    example: 18/08/2020
+                  bounding_box: 
+                    type: array
+                    items: 
+                      type: array
+                      items: 
+                        type: number
+                        example: 84.23780696094036
+      fulltext: 
+        type: string
+        example: RELEVE ET INFORMATION v
+      entities: 
+        type: array
+        items: 
+          type: object
+          properties: 
+            bounding_box: 
+              type: array
+              items: 
+                type: array
+                items: 
+                  type: number
+                  example: 137
+            confidence: 
+              type: number
+              example: 1
+            id: 
+              type: string
+              example: 79ce4e03-c346-4ede-8843-9341918e4a2c
+            name: 
+              type: string
+              example: bank
+            text: 
+              type: string
+              example: CIC
+            value: 
+              type: string
+              example: CIC
+
+
+
+# Added by API Auto Mocking Plugin
+host: inference.eu-west-1.dataleon.ai
+schemes:
+ - https
+# Added by API Auto Mocking Plugin
+basePath: /
