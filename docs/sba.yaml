@@ -49,7 +49,7 @@ paths:
         type: file
       - name: callback_url
         in: header
-        description: You receive result on webhook when result
+        description: Offline processing
         required: false
         type: string
       responses:
@@ -86,7 +86,7 @@ paths:
         type: file
       - name: callback_url
         in: header
-        description: You receive result on webhook when result
+        description: Offline processing
         required: false
         type: string
       responses:
@@ -125,7 +125,7 @@ paths:
         type: file
       - name: callback_url
         in: header
-        description: You receive result on webhook when result
+        description: Offline processing
         required: false
         type: string
       responses:
@@ -164,7 +164,7 @@ paths:
         type: file
       - name: callback_url
         in: header
-        description: You receive result on webhook when result
+        description: Offline processing
         required: false
         type: string
       responses:
@@ -203,7 +203,7 @@ paths:
         type: file
       - name: callback_url
         in: header
-        description: You receive result on webhook when result
+        description: Offline processing
         required: false
         type: string
       responses:
@@ -242,7 +242,7 @@ paths:
         type: file
       - name: callback_url
         in: header
-        description: You receive result on webhook when result
+        description: Offline processing
         required: false
         type: string
       responses:
@@ -281,7 +281,7 @@ paths:
         type: file
       - name: callback_url
         in: header
-        description: You receive result on webhook when result
+        description: Offline processing
         required: false
         type: string
       responses:
@@ -320,7 +320,7 @@ paths:
         type: file
       - name: callback_url
         in: header
-        description: You receive result on webhook when result
+        description: Offline processing
         required: false
         type: string
       responses:
@@ -359,7 +359,7 @@ paths:
         type: file
       - name: callback_url
         in: header
-        description: You receive result on webhook when result
+        description: Offline processing
         required: false
         type: string
       responses:
@@ -398,7 +398,7 @@ paths:
         type: file
       - name: callback_url
         in: header
-        description: You receive result on webhook when result
+        description: Offline processing
         required: false
         type: string
       responses:
@@ -437,7 +437,7 @@ paths:
         type: file
       - name: callback_url
         in: header
-        description: You receive result on webhook when result
+        description: Offline processing
         required: false
         type: string
       responses:
@@ -476,7 +476,7 @@ paths:
         type: file
       - name: callback_url
         in: header
-        description: You receive result on webhook when result
+        description: Offline processing
         required: false
         type: string
       responses:
@@ -515,7 +515,7 @@ paths:
         type: file
       - name: callback_url
         in: header
-        description: You receive result on webhook when result
+        description: Offline processing
         required: false
         type: string
       responses:
@@ -554,7 +554,7 @@ paths:
         type: file
       - name: callback_url
         in: header
-        description: You receive result on webhook when result
+        description: Offline processing
         required: false
         type: string
       responses:
