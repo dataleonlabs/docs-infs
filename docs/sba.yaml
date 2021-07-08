@@ -42,16 +42,11 @@ paths:
       produces:
       - application/json
       parameters:
-      - name: input_file
+      - name: file
         in: formData
         description: file to upload
         required: true
         type: file
-      - name: state
-        in: formData
-        description: Data send to your webhook on query
-        required: false
-        type: string
       - name: callback_url
         in: header
         description: You receive result on webhook when result
@@ -84,16 +79,11 @@ paths:
       produces:
       - application/json
       parameters:
-      - name: input_file
+      - name: file
         in: formData
         description: file to upload
         required: true
         type: file
-      - name: state
-        in: formData
-        description: Data send to your webhook on query
-        required: false
-        type: string
       - name: callback_url
         in: header
         description: You receive result on webhook when result
@@ -128,16 +118,11 @@ paths:
       produces:
       - application/json
       parameters:
-      - name: input_file
+      - name: file
         in: formData
         description: file to upload
         required: true
         type: file
-      - name: state
-        in: formData
-        description: Data send to your webhook on query
-        required: false
-        type: string
       - name: callback_url
         in: header
         description: You receive result on webhook when result
@@ -172,16 +157,11 @@ paths:
       produces:
       - application/json
       parameters:
-      - name: input_file
+      - name: file
         in: formData
         description: file to upload
         required: true
         type: file
-      - name: state
-        in: formData
-        description: Data send to your webhook on query
-        required: false
-        type: string
       - name: callback_url
         in: header
         description: You receive result on webhook when result
@@ -216,16 +196,11 @@ paths:
       produces:
       - application/json
       parameters:
-      - name: input_file
+      - name: file
         in: formData
         description: file to upload
         required: true
         type: file
-      - name: state
-        in: formData
-        description: Data send to your webhook on query
-        required: false
-        type: string
       - name: callback_url
         in: header
         description: You receive result on webhook when result
@@ -260,16 +235,11 @@ paths:
       produces:
       - application/json
       parameters:
-      - name: input_file
+      - name: file
         in: formData
         description: file to upload
         required: true
         type: file
-      - name: state
-        in: formData
-        description: Data send to your webhook on query
-        required: false
-        type: string
       - name: callback_url
         in: header
         description: You receive result on webhook when result
@@ -304,16 +274,11 @@ paths:
       produces:
       - application/json
       parameters:
-      - name: input_file
+      - name: file
         in: formData
         description: file to upload
         required: true
         type: file
-      - name: state
-        in: formData
-        description: Data send to your webhook on query
-        required: false
-        type: string
       - name: callback_url
         in: header
         description: You receive result on webhook when result
@@ -348,16 +313,11 @@ paths:
       produces:
       - application/json
       parameters:
-      - name: input_file
+      - name: file
         in: formData
         description: file to upload
         required: true
         type: file
-      - name: state
-        in: formData
-        description: Data send to your webhook on query
-        required: false
-        type: string
       - name: callback_url
         in: header
         description: You receive result on webhook when result
@@ -392,16 +352,11 @@ paths:
       produces:
       - application/json
       parameters:
-      - name: input_file
+      - name: file
         in: formData
         description: file to upload
         required: true
         type: file
-      - name: state
-        in: formData
-        description: Data send to your webhook on query
-        required: false
-        type: string
       - name: callback_url
         in: header
         description: You receive result on webhook when result
@@ -436,16 +391,11 @@ paths:
       produces:
       - application/json
       parameters:
-      - name: input_file
+      - name: file
         in: formData
         description: file to upload
         required: true
         type: file
-      - name: state
-        in: formData
-        description: Data send to your webhook on query
-        required: false
-        type: string
       - name: callback_url
         in: header
         description: You receive result on webhook when result
@@ -480,16 +430,11 @@ paths:
       produces:
       - application/json
       parameters:
-      - name: input_file
+      - name: file
         in: formData
         description: file to upload
         required: true
         type: file
-      - name: state
-        in: formData
-        description: Data send to your webhook on query
-        required: false
-        type: string
       - name: callback_url
         in: header
         description: You receive result on webhook when result
@@ -524,16 +469,11 @@ paths:
       produces:
       - application/json
       parameters:
-      - name: input_file
+      - name: file
         in: formData
         description: file to upload
         required: true
         type: file
-      - name: state
-        in: formData
-        description: Data send to your webhook on query
-        required: false
-        type: string
       - name: callback_url
         in: header
         description: You receive result on webhook when result
@@ -568,16 +508,11 @@ paths:
       produces:
       - application/json
       parameters:
-      - name: input_file
+      - name: file
         in: formData
         description: file to upload
         required: true
         type: file
-      - name: state
-        in: formData
-        description: Data send to your webhook on query
-        required: false
-        type: string
       - name: callback_url
         in: header
         description: You receive result on webhook when result
@@ -612,16 +547,11 @@ paths:
       produces:
       - application/json
       parameters:
-      - name: input_file
+      - name: file
         in: formData
         description: file to upload
         required: true
         type: file
-      - name: state
-        in: formData
-        description: Data send to your webhook on query
-        required: false
-        type: string
       - name: callback_url
         in: header
         description: You receive result on webhook when result
