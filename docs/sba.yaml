@@ -699,9 +699,8 @@ definitions:
               type: string
               example: quality
             value: 
-              type: integer
-              format: int32
-              example: 1
+              type: string
+              example: bad|normal|good|excellent
             confidence: 
               type: number
               example: 0.9
