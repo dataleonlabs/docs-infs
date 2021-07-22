@@ -133,7 +133,7 @@ paths:
       security:
       - api_key: []
 
-  /tasks/{Id}:
+  /task/{Id}:
     get:
       tags:
       - Operating
