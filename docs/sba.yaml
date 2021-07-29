@@ -48,7 +48,7 @@ paths:
         required: true
         type: file
       - name: callback_url
-        in: header
+        in: formData
         description: Offline processing
         required: false
         type: string
@@ -85,7 +85,7 @@ paths:
         required: true
         type: file
       - name: callback_url
-        in: header
+        in: formData
         description: Offline processing
         required: false
         type: string
@@ -124,7 +124,7 @@ paths:
         required: true
         type: file
       - name: callback_url
-        in: header
+        in: formData
         description: Offline processing
         required: false
         type: string
@@ -163,7 +163,7 @@ paths:
         required: true
         type: file
       - name: callback_url
-        in: header
+        in: formData
         description: Offline processing
         required: false
         type: string
@@ -202,7 +202,7 @@ paths:
         required: true
         type: file
       - name: callback_url
-        in: header
+        in: formData
         description: Offline processing
         required: false
         type: string
@@ -241,7 +241,7 @@ paths:
         required: true
         type: file
       - name: callback_url
-        in: header
+        in: formData
         description: Offline processing
         required: false
         type: string
@@ -280,7 +280,7 @@ paths:
         required: true
         type: file
       - name: callback_url
-        in: header
+        in: formData
         description: Offline processing
         required: false
         type: string
@@ -319,7 +319,7 @@ paths:
         required: true
         type: file
       - name: callback_url
-        in: header
+        in: formData
         description: Offline processing
         required: false
         type: string
@@ -358,7 +358,7 @@ paths:
         required: true
         type: file
       - name: callback_url
-        in: header
+        in: formData
         description: Offline processing
         required: false
         type: string
@@ -397,7 +397,7 @@ paths:
         required: true
         type: file
       - name: callback_url
-        in: header
+        in: formData
         description: Offline processing
         required: false
         type: string
@@ -436,7 +436,7 @@ paths:
         required: true
         type: file
       - name: callback_url
-        in: header
+        in: formData
         description: Offline processing
         required: false
         type: string
@@ -475,7 +475,7 @@ paths:
         required: true
         type: file
       - name: callback_url
-        in: header
+        in: formData
         description: Offline processing
         required: false
         type: string
@@ -514,7 +514,7 @@ paths:
         required: true
         type: file
       - name: callback_url
-        in: header
+        in: formData
         description: Offline processing
         required: false
         type: string
@@ -553,7 +553,7 @@ paths:
         required: true
         type: file
       - name: callback_url
-        in: header
+        in: formData
         description: Offline processing
         required: false
         type: string
