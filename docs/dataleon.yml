@@ -28,7 +28,7 @@ tags:
 # schemes:
 # - http
 paths:
-  /invoice/v4:
+  /invoice:
     post:
       tags:
       - Document API
