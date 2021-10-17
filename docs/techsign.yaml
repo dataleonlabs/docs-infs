@@ -54,11 +54,11 @@ tags:
 # schemes:
 # - http
 paths:
-  /document-info:
+  /id/eu:
     post:
       tags:
       - KYC
-      summary: Detect meta information of document
+      summary: Detect meta information of id document
       description: |
         This URL detect type of document ID, Passport or country of document
       consumes:
@@ -93,82 +93,6 @@ paths:
       security:
       - api_key: []
       
-  /entities-extraction:
-    post:
-      tags:
-      - KYC
-      summary: Extraction metadata on document or image
-      description: Extract data on ID, Driver license, Proof of residence document 
-      consumes:
-      - application/json
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: file
-        in: formData
-        description: document file
-        required: true
-        type: file
-      - name: callback_url
-        in: formData
-        description: URL for offline processing
-        required: false
-        type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/Entity'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
-
-  /task/{Id}:
-    get:
-      tags:
-      - Operating
-      summary: Large file offline processing
-      description: Asynchronous ("offline") requests target longer documents. These types of requests start a long-running operations. When this operation finishes it stores output as a JSON file in a specified Young App Platform.
-      
-      
-        When the status field has the succeeded value, the JSON response contains the extracted text content from your image or document. 
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: Id
-        in: path
-        description: ID of task
-        required: true
-        type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/ApiResponse'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        404:
-          description: The requested workfow doesn't exist.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
 
 securityDefinitions:
   api_key:
@@ -267,4 +191,4 @@ schemes:
 # basePath: /sba
 # Added by API Auto Mocking Plugin
 host: inference.eu-west-1.dataleon.ai
-basePath: /techsign
+basePath: /
