@@ -444,7 +444,7 @@ definitions:
 
 
 # Added by API Auto Mocking Plugin
-host: preprod-inference.eu-west-1.dataleon.ai
+host: preprod.inference.eu-west-1.dataleon.ai
 schemes:
  - https
 # Added by API Auto Mocking Plugin
