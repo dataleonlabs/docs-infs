@@ -22,6 +22,9 @@ info:
 
 
 tags:
+- name: Document Understanding v3
+  description: Document understanding IA v3
+  
 - name: Document Understanding
   description: Document understanding IA
   
