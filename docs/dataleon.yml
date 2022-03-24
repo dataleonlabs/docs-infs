@@ -23,13 +23,13 @@ info:
 
 tags:
 - name: ID
-  description: Document understanding IA
+  description: APIs for extract data on Identity card for KYC services
 - name: Financial
-  description: Document understanding IA
+  description: APIs for extract amount and financial informations
 - name: Administrative
-  description: Document understanding IA
+  description: APIs for extract administrative information from Gouv or institut services
 - name: Insurance
-  description: Document understanding IA
+  description: APIs for extract data from insurance document
     
 # schemes:
 # - http
