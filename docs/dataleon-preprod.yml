@@ -14,7 +14,7 @@ info:
     - Dimensions at least 50 x 50 pixels and at most 10000 x 10000 pixels.
     - The PDF dimensions must be at most 17 x 17 inches, corresponding to legal or A3 paper sizes and smaller.
 
-  version: 3.0.0
+  version: 4.0.0
   title: Dataleon - API Inference [PREPROD]
   termsOfService: https://dataleon.ai/terms-of-use
   contact:
