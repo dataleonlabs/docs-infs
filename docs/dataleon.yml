@@ -70,6 +70,42 @@ paths:
       security:
       - api_key: []
 
+  /invoice/v8:
+    post:
+      tags:
+      - Financial
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: callback_url
+        in: formData
+        description: Offline processing
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Entity'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+
 
   /purchase-order:
     post:
@@ -1053,7 +1089,6 @@ definitions:
             value: 
               type: string
               example: CIC
-
 
 
 # Added by API Auto Mocking Plugin
