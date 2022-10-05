@@ -22,7 +22,7 @@ info:
 
 
 tags:
-- name: Financial
+- name: Financial services
   description: APIs for extract amount and financial informations
 - name: ID
   description: APIs for extract data on Identity card for KYC service
@@ -37,7 +37,7 @@ paths:
   /invoice:
     post:
       tags:
-      - Financial
+      - Financial services
       consumes:
       - application/json
       - multipart/form-data
@@ -49,79 +49,11 @@ paths:
         description: file to upload
         required: true
         type: file
-      - name: callback_url
+      - name: workspace_id
         in: formData
-        description: Offline processing
-        required: false
+        description: Add your workspace_id
+        required: true
         type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/Entity'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
-
-  /invoice/v8:
-    post:
-      tags:
-      - Financial
-      consumes:
-      - application/json
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: file
-        in: formData
-        description: file to upload
-        required: true
-        type: file
-      - name: callback_url
-        in: formData
-        description: Offline processing
-        required: false
-        type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/Entity'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
-
-
-  /purchase-order:
-    post:
-      tags:
-      - Financial
-      consumes:
-      - application/json
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: file
-        in: formData
-        description: file to upload
-        required: true
-        type: file
       - name: callback_url
         in: formData
         description: Offline processing
@@ -146,7 +78,7 @@ paths:
   /receipt:
     post:
       tags:
-      - Financial
+      - Financial services
       consumes:
       - application/json
       - multipart/form-data
@@ -158,6 +90,11 @@ paths:
         description: file to upload
         required: true
         type: file
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
       - name: callback_url
         in: formData
         description: Offline processing
@@ -182,7 +119,7 @@ paths:
   /liasse-fiscale:
     post:
       tags:
-      - Financial
+      - Financial services
       consumes:
       - application/json
       - multipart/form-data
@@ -194,6 +131,11 @@ paths:
         description: file to upload
         required: true
         type: file
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
       - name: callback_url
         in: formData
         description: Offline processing
@@ -215,46 +157,10 @@ paths:
       security:
       - api_key: []
       
-  /liasse-fiscale/v4:
-    post:
-      tags:
-      - Financial
-      consumes:
-      - application/json
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: file
-        in: formData
-        description: file to upload
-        required: true
-        type: file
-      - name: callback_url
-        in: formData
-        description: Offline processing
-        required: false
-        type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/Liasse'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
-
   /bank-statements:
     post:
       tags:
-      - Financial
+      - Financial services
       consumes:
       - application/json
       - multipart/form-data
@@ -266,6 +172,11 @@ paths:
         description: file to upload
         required: true
         type: file
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
       - name: callback_url
         in: formData
         description: Offline processing
@@ -286,47 +197,11 @@ paths:
           description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
       security:
       - api_key: []
-      
-  /bank-statements/v3:
-    post:
-      tags:
-      - Financial
-      consumes:
-      - application/json
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: file
-        in: formData
-        description: file to upload
-        required: true
-        type: file
-      - name: callback_url
-        in: formData
-        description: Offline processing
-        required: false
-        type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/Transaction'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
-      
+  
   /kbis:
     post:
       tags:
-      - Administrative
+      - ID
       consumes:
       - application/json
       - multipart/form-data
@@ -338,6 +213,11 @@ paths:
         description: file to upload
         required: true
         type: file
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
       - name: callback_url
         in: formData
         description: Offline processing
@@ -362,7 +242,7 @@ paths:
   /quittance-loyer:
     post:
       tags:
-      - Administrative
+      - Financial services
       consumes:
       - application/json
       - multipart/form-data
@@ -374,42 +254,11 @@ paths:
         description: file to upload
         required: true
         type: file
-      - name: callback_url
+      - name: workspace_id
         in: formData
-        description: Offline processing
-        required: false
+        description: Add your workspace_id
+        required: true
         type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/Entity'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
-
-  /carte-etudiante/fr:
-    post:
-      tags:
-      - Administrative
-      consumes:
-      - application/json
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: file
-        in: formData
-        description: file to upload
-        required: true
-        type: file
       - name: callback_url
         in: formData
         description: Offline processing
@@ -434,7 +283,7 @@ paths:
   /avis-imposition:
     post:
       tags:
-      - Administrative
+      - Financial services
       consumes:
       - application/json
       - multipart/form-data
@@ -446,6 +295,11 @@ paths:
         description: file to upload
         required: true
         type: file
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
       - name: callback_url
         in: formData
         description: Offline processing
@@ -470,7 +324,7 @@ paths:
   /avis-siren-insee:
     post:
       tags:
-      - Administrative
+      - ID
       consumes:
       - application/json
       - multipart/form-data
@@ -482,6 +336,11 @@ paths:
         description: file to upload
         required: true
         type: file
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
       - name: callback_url
         in: formData
         description: Offline processing
@@ -506,7 +365,7 @@ paths:
   /fiche-de-paie:
     post:
       tags:
-      - Financial
+      - Financial services
       consumes:
       - application/json
       - multipart/form-data
@@ -518,6 +377,11 @@ paths:
         description: file to upload
         required: true
         type: file
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
       - name: callback_url
         in: formData
         description: Offline processing
@@ -542,7 +406,7 @@ paths:
   /rib-iban:
     post:
       tags:
-      - Financial
+      - Financial services
       consumes:
       - application/json
       - multipart/form-data
@@ -554,6 +418,11 @@ paths:
         description: file to upload
         required: true
         type: file
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
       - name: callback_url
         in: formData
         description: Offline processing
@@ -591,6 +460,11 @@ paths:
         description: file to upload
         required: true
         type: file
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
       - name: callback_url
         in: formData
         description: Offline processing
@@ -627,6 +501,11 @@ paths:
         description: file to upload
         required: true
         type: file
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
       - name: callback_url
         in: formData
         description: Offline processing
@@ -663,6 +542,11 @@ paths:
         description: file to upload
         required: true
         type: file
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
       - name: callback_url
         in: formData
         description: Offline processing
@@ -699,114 +583,11 @@ paths:
         description: file to upload
         required: true
         type: file
-      - name: callback_url
+      - name: workspace_id
         in: formData
-        description: Offline processing
-        required: false
-        type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/Entity'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
-
-  /carte-vitale:
-    post:
-      tags:
-      - Insurance
-      consumes:
-      - application/json
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: file
-        in: formData
-        description: file to upload
+        description: Add your workspace_id
         required: true
-        type: file
-      - name: callback_url
-        in: formData
-        description: Offline processing
-        required: false
         type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/Entity'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
-
-  /attestation-paiement-caf:
-    post:
-      tags:
-      - Insurance
-      consumes:
-      - application/json
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: file
-        in: formData
-        description: file to upload
-        required: true
-        type: file
-      - name: callback_url
-        in: formData
-        description: Offline processing
-        required: false
-        type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/Entity'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
-
-  /attestation-quotient-familial-caf:
-    post:
-      tags:
-      - Insurance
-      consumes:
-      - application/json
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: file
-        in: formData
-        description: file to upload
-        required: true
-        type: file
       - name: callback_url
         in: formData
         description: Offline processing
