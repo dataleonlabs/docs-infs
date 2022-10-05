@@ -26,8 +26,6 @@ tags:
   description: APIs for extract amount and financial informations
 - name: ID
   description: APIs for extract data on Identity card for KYC service
-- name: Administrative
-  description: APIs for extract administrative information from Gouv or institut services
 - name: Insurance
   description: APIs for extract data from insurance document
     
