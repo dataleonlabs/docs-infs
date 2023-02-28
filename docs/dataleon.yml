@@ -198,7 +198,7 @@ paths:
   /id/france:
     post:
       tags:
-      - ID
+      - KYC & ID
       consumes:
       - application/json
       - multipart/form-data
@@ -239,7 +239,7 @@ paths:
   /passport:
     post:
       tags:
-      - ID
+      - KYC & ID
       consumes:
       - application/json
       - multipart/form-data
