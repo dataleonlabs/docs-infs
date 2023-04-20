@@ -35,6 +35,8 @@ paths:
     post:
       tags:
       - Accounting
+      summary: Extract entities from an invoice using OCR.
+      description: This endpoint allows you to extract entities from an invoice using OCR (Optical Character Recognition) technology. Entities can include information such as the customer name, invoice number, date, and total amount due. By sending a POST request to this endpoint with an invoice image, the OCR technology will extract the relevant entities and return them in a structured format. This endpoint is useful for automating the data extraction process and improving the accuracy of your accounting operations. The extracted entities can be used for tasks such as record-keeping, payment tracking, and tax purposes.
       consumes:
       - application/json
       - multipart/form-data
@@ -76,6 +78,8 @@ paths:
     post:
       tags:
       - Accounting
+      summary: Extract entities from receipts and invoices for accounting purposes.
+      description: This endpoint allows you to extract entities, such as vendor names, dates, and total amounts due, from receipts and invoices for accounting purposes. By sending a POST request to this endpoint with the necessary information, such as the image file of the receipt or invoice, you can perform OCR extraction to automate the data extraction process and improve the accuracy of your accounting operations. The extracted entities can be used for tasks such as record-keeping, payment tracking, and tax purposes. This endpoint is useful for streamlining your accounting process and reducing manual data entry.
       consumes:
       - application/json
       - multipart/form-data
@@ -117,6 +121,8 @@ paths:
     post:
       tags:
       - Accounting
+      summary: Extract entities from receipts for accounting purposes.
+      description: This endpoint allows you to extract entities, such as vendor names, dates, and total amounts due, from receipts for accounting purposes. By sending a POST request to this endpoint with the necessary information, such as the image file of the receipt, you can perform OCR extraction to automate the data extraction process and improve the accuracy of your accounting operations. The extracted entities can be used for tasks such as record-keeping, payment tracking, and tax purposes. This endpoint is useful for streamlining your accounting process and reducing manual data entry.
       consumes:
       - application/json
       - multipart/form-data
@@ -158,6 +164,8 @@ paths:
     post:
       tags:
       - Financial
+      summary: Generate financial reports for tax purposes.
+      description: This endpoint allows you to generate financial reports, known as "liasse fiscale" in French, for tax purposes. By sending a POST request to this endpoint with the necessary information, such as the accounting data and tax information, you can generate a report that summarizes the financial activity of your business for a given tax period. This report is required by French law for businesses operating in France and must be submitted to the tax authorities annually. This endpoint is useful for automating the process of generating financial reports and ensuring compliance with tax regulations.
       consumes:
       - application/json
       - multipart/form-data
@@ -199,6 +207,8 @@ paths:
     post:
       tags:
       - Financial
+      summary: Retrieve bank statement data for financial analysis and reporting.
+      description: This endpoint allows you to retrieve bank statement data for financial analysis and reporting. By sending a POST request to this endpoint with the necessary information, such as the bank account number and time period, you can retrieve bank statement data that can be used for various financial services purposes, such as analyzing spending patterns, identifying fraud, or generating financial reports. This endpoint is particularly useful for financial institutions, credit bureaus, or other businesses that need to process large volumes of bank statement data. The retrieved data can be used to gain insights into customer behavior or improve financial reporting accuracy.
       consumes:
       - application/json
       - multipart/form-data
