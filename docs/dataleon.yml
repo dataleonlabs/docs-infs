@@ -21,10 +21,10 @@ info:
     email: support@dataleon.ai
 
 tags:
+- name: KYC, KYB & AML
+  description: APIs for extract verify identity document for KYC service
 - name: Accounting
   description: APIs for extract data on accounting documents
-- name: KYC & ID
-  description: APIs for extract data on Identity card for KYC service
 - name: Financial
   description: APIs for extract data on financials documents
  
@@ -195,10 +195,82 @@ paths:
       security:
       - api_key: []
 
-  /id/france:
+
+  /pre-request:
     post:
       tags:
-      - KYC & ID
+      - KYC, KYB & AML
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
+      - name: callback_url
+        in: formData
+        description: Offline processing
+        required: true
+        type: string
+      - name: path
+        in: formData
+        description: Application for processing data
+        required: true
+        type: string
+      - name: first_name
+        in: formData
+        description: User first name data on your system
+        required: true
+        type: string
+      - name: last_name
+        in: formData
+        description: User last name data on your system
+        required: true
+        type: string
+      - name: country
+        in: formData
+        description: User country on your system
+        required: false
+        type: string
+      - name: gender
+        in: formData
+        description: User gender data on your system
+        required: false
+        type: string
+      - name: sms_phone_number
+        in: formData
+        description: User sms phone number to send link to user Exemple (+33766XXXXXX)
+        required: false
+        type: string
+      - name: qr_code
+        in: formData
+        description: active QR code link ("true" or "false")
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/PreRequest'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+
+  /proof-of-address:
+    post:
+      tags:
+      - KYC, KYB & AML
       consumes:
       - application/json
       - multipart/form-data
@@ -236,10 +308,10 @@ paths:
       security:
       - api_key: []
 
-  /passport:
+  /proof-of-iban:
     post:
       tags:
-      - KYC & ID
+      - KYC, KYB & AML
       consumes:
       - application/json
       - multipart/form-data
@@ -276,6 +348,167 @@ paths:
           description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
       security:
       - api_key: []
+
+  /document-recognition:
+    post:
+      tags:
+      - KYC, KYB & AML
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
+      - name: callback_url
+        in: formData
+        description: Offline processing
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Entity'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+
+  /kyb-verification:
+    post:
+      tags:
+      - KYC, KYB & AML
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
+      - name: callback_url
+        in: formData
+        description: Offline processing
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Entity'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+
+  /force/notification:
+    post:
+      tags:
+      - KYC, KYB & AML
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
+      - name: callback_url
+        in: formData
+        description: Offline processing
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Entity'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+
+  /check/{Id}:
+    get:
+      tags:
+      - KYC, KYB & AML
+      summary: Large file offline processing
+      description: Asynchronous ("offline") requests target longer documents. These types of requests start a long-running operations. When this operation finishes it stores output as a JSON file in a specified Young App Platform.
+      
+      
+        When the status field has the succeeded value, the JSON response contains the extracted text content from your image or document. 
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Id
+        in: path
+        description: ID of task
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        404:
+          description: The requested workfow doesn't exist.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+
 
   /task/{Id}:
     get:
@@ -384,6 +617,17 @@ definitions:
           status: 
             type: string
             example: successful
+  
+  PreRequest:
+    type: object
+    properties:
+      task_id:
+        type: string
+        description: The unique identifier of the task
+      status:
+        type: string
+        description: The current status of the task
+
   Liasse:
     type: object
     properties:
