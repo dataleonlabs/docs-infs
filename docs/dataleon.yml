@@ -444,7 +444,8 @@ paths:
     post:
       tags:
       - KYC, KYB & AML
-      summary: This endpoint enables you to verify the identity document submitted by the user and ensure that it is the correct and valid document. This process is an essential part of the KYC (Know Your Customer), KYB (Know Your Business), and AML (Anti-Money Laundering) procedures, ensuring that only authentic and verified identities are being used.
+      summary: Verify the identity document to ensure that the user has submitted the correct and valid document.
+      description: This endpoint enables you to verify the identity document submitted by the user and ensure that it is the correct and valid document. This process is an essential part of the KYC (Know Your Customer), KYB (Know Your Business), and AML (Anti-Money Laundering) procedures, ensuring that only authentic and verified identities are being used.
       consumes:
       - application/json
       - multipart/form-data
