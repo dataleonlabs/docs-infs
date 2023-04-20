@@ -200,7 +200,8 @@ paths:
     post:
       tags:
       - KYC, KYB & AML
-      summary: Create an identification url for your application 
+      summary: Generate a unique URL for identifying your user.
+      description: This endpoint enables your application to generate a unique identification URL that can be returned to initiate the KYC (Know Your Customer), KYB (Know Your Business), and AML (Anti-Money Laundering) processes.
       consumes:
       - application/json
       - multipart/form-data
@@ -272,7 +273,8 @@ paths:
     post:
       tags:
       - KYC, KYB & AML
-      summary: Validate current residence of your user
+      summary: Verify the current residential address of your user.
+      description: This endpoint enables you to validate the current residence of your user by submitting a proof of address document, such as a utility bill or a bank statement. The proof of address document will be verified as part of the KYC (Know Your Customer), KYB (Know Your Business), and AML (Anti-Money Laundering) processes, ensuring compliance with regulatory requirements.
       consumes:
       - application/json
       - multipart/form-data
@@ -334,7 +336,8 @@ paths:
     post:
       tags:
       - KYC, KYB & AML
-      summary: Validate current iban of your user
+      summary: Verify the IBAN (International Bank Account Number) of your user.
+      description: This endpoint enables you to validate the current IBAN (International Bank Account Number) of your user by providing the necessary banking information. The IBAN validation process is an integral part of the KYC (Know Your Customer), KYB (Know Your Business), and AML (Anti-Money Laundering) procedures, ensuring that all regulatory requirements are met.
       consumes:
       - application/json
       - multipart/form-data
@@ -401,7 +404,7 @@ paths:
     post:
       tags:
       - KYC, KYB & AML
-      summary: Recognize identity document make sure user have fill good document
+      summary: This endpoint enables you to verify the identity document submitted by the user and ensure that it is the correct and valid document. This process is an essential part of the KYC (Know Your Customer), KYB (Know Your Business), and AML (Anti-Money Laundering) procedures, ensuring that only authentic and verified identities are being used.
       consumes:
       - application/json
       - multipart/form-data
@@ -463,7 +466,8 @@ paths:
     post:
       tags:
       - KYC, KYB & AML
-      summary: Validate UBO on company
+      summary: Verify the Ultimate Beneficial Owner (UBO) of the company.
+      description: This endpoint allows you to verify the Ultimate Beneficial Owner (UBO) of a company as part of the KYC (Know Your Customer), KYB (Know Your Business), and AML (Anti-Money Laundering) procedures. The UBO verification process ensures that the ownership structure of the company is transparent, and the identities of the individuals involved are verified, helping to prevent financial crimes such as money laundering and fraud.
       consumes:
       - application/json
       - multipart/form-data
@@ -500,7 +504,8 @@ paths:
     get:
       tags:
       - KYC, KYB & AML
-      summary: Check status and get data of current request
+      summary: Retrieve the status and data of the current request.
+      description: This endpoint enables you to retrieve the status and data of the current KYC (Know Your Customer), KYB (Know Your Business), or AML (Anti-Money Laundering) request using the provided request ID. By providing the request ID, you can check the current status of the request, such as whether it is pending or complete, as well as retrieve any relevant data associated with the request, such as identification documents or proof of address. This endpoint is useful for tracking the progress of a request and retrieving data for further processing or analysis.
       consumes:
       - application/json
       produces:
@@ -530,10 +535,11 @@ paths:
       - api_key: []
 
   /notify/{Id}:
-    get:
+    post:
       tags:
       - KYC, KYB & AML
-      summary: Resend sms on end-user
+      summary: Send a new SMS to the end-user.
+      description:  This endpoint allows you to send a new SMS notification to the end-user using the provided request ID. The notification is used to notify the user of any updates or actions required to complete a process. By sending a new SMS, you can ensure that the end-user receives the latest information and can take the necessary steps to complete the process. This endpoint is useful for ensuring that the end-user is informed and up-to-date throughout the process.
       consumes:
       - application/json
       produces:
