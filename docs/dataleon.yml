@@ -359,7 +359,7 @@ paths:
       - name: company_name
         in: formData
         description: User company name on your system
-        required: true
+        required: false
         type: string
       - name: country
         in: formData
@@ -422,7 +422,7 @@ paths:
       - name: company_name
         in: formData
         description: User company name on your system
-        required: true
+        required: false
         type: string
       - name: iban
         in: formData
@@ -663,69 +663,184 @@ securityDefinitions:
     in: header
 
 definitions:
-  Entity:
+  ResponseKYC:
     type: object
     properties:
-      blocks: 
+      entities:
         type: array
-        items: 
+        description: "A list of entities detected in the document"
+        items:
           type: object
-          properties: 
-            id: 
+          properties:
+            id:
               type: string
-              example: 5a9278a60cd211eba1b93a1350d1ea81
-            text: 
-              type: string
-              example: 12445 EUR
-            confidence: 
+              description: "The unique identifier for the entity"
+              example: "194e5d63-675c-4975-94ba-d82124b2c914"
+            confidence:
               type: number
-              example: 0.9
-            bounding_box: 
+              description: "The confidence score for the detection"
+              example: 0.9984347224235535
+            name:
+              type: string
+              description: "The name of the detected entity"
+              example: "FirstName"
+            bounding_box:
               type: array
-              items: 
+              description: "The coordinates of the bounding box around the detected entity"
+              items:
                 type: array
-                items: 
+                items:
                   type: number
-                  example: 51
-      fulltext: 
-        type: string
-        example: total 12...
-      entities: 
+              example: [[-1, 83], [711, 83], [711, 795], [-1, 795]]
+            page:
+              type: integer
+              description: "The page number of the document where the entity was detected"
+              example: 1
+            document_number:
+              type: integer
+              description: "The number of the document in a multi-document analysis"
+              example: 1
+            document_id:
+              type: string
+              description: "The unique identifier of the document"
+              example: "Nxb2bxSBKJnu5KmZulra4YCg-face"
+            step:
+              type: string
+              description: "The step in the document analysis pipeline where the entity was detected"
+              example: "step-3"
+            action:
+              type: string
+              description: "The action performed on the detected entity"
+              example: "face"
+            value:
+              type: string
+              description: "The value of the detected entity"
+              example: "Gérard"
+            document_name:
+              type: string
+              description: "The name of the document file"
+              example: "Nxb2bxSBKJnu5KmZulra4YCg-doc.jpg"
+      validations:
         type: array
-        items: 
+        items:
           type: object
-          properties: 
-            id: 
+          properties:
+            message:
               type: string
-              example: 5a9278a60cd211eba1b93a1350d1ea81
-            name: 
+              description: The message associated with the validation.
+              example: "firstName detected"
+            code:
               type: string
-              example: total
-            text: 
+              description: The code associated with the validation.
+              example: "firstName_match"
+            id:
               type: string
-              example: 12445 EUR
-            value: 
-              type: number
-              example: 124.45
-            confidence: 
-              type: number
-              example: 0.9
-            bounding_box: 
+              description: The unique identifier associated with the validation.
+              example: "30fec0a9-0203-4bbf-b8ff-42e2a3d73933"
+            type:
+              type: string
+              description: The type of validation.
+              example: "node"
+            document_name:
+              type: string
+              description: The name of the document associated with the validation.
+              example: "Nxb2bxSBKJnu5KmZulra4YCg-face.jpg"
+            document_id:
+              type: string
+              description: The unique identifier associated with the document.
+              example: "Nxb2bxSBKJnu5KmZulra4YCg-face"
+            step:
+              type: string
+              description: The step of the validation.
+              example: "step-3"
+            action:
+              type: string
+              description: The action associated with the validation.
+              example: "firstName_match"
+            page:
+              type: integer
+              description: The page number associated with the validation.
+              example: 1
+            nodes:
               type: array
-              items: 
-                type: array
-                items: 
-                  type: number
-                  example: 51
+              description: The nodes associated with the validation.
+              example: []
+            tags:
+              type: array
+              description: The tags associated with the validation.
+              example: []
+            name:
+              type: string
+              description: The name of the validation.
+              example: "FirstName_match"
+            weight:
+              type: integer
+              description: The weight of the validation.
+              example: 1
+            validate:
+              type: boolean
+              description: Indicates whether the validation is to be validated.
+              example: true
+            type_validation:
+              type: string
+              description: The type of validation to be performed.
+              example: "FirstName_match"
+            document_number:
+              type: integer
+              description: The document number associated with the validation.
+              example: 1
+      class:
+        type: array
+        items:
+          type: object
+          properties:
+            id:
+              type: string
+              description: The unique identifier associated with the class.
+              example: "90a1b06a-4ac5-45d2-a9a4-e5ad1bdef59f"
+            confidence:
+              type: number
+              description: The confidence level associated with the class.
+              example: 1
+            name:
+              type: string
+              description: The name of the class.
+              example: "Invoice"
+            page:
+              type: integer
+              description: The page number associated with the class.
+              example: 1
+            document_number:
+              type: integer
+              description: The document number associated with the class.
+              example: 1
+            document_id:
+              type: string
+              description: The unique identifier associated with the document.
+              example: "Nxb2bxSBKJnu5KmZulra4YCg-doc"
+            step:
+              type: string
+              description: The step of the class.
+              example: "step-3"
+            action:
+              type: string
+              description: The action associated with the class.
+              example: "document_type"
+            document_name:
+              type: string
+              description: The name of the document associated with the class.
+              example: "Nxb2bxSBKJnu5KmZulra4YCg-doc.jpg"
       metadata: 
         type: object
-        properties:  
-          company_name: 
+        properties:
+          task_id:
             type: string
-            example: 
-          status: 
+            description: The unique identifier for the task
+            example: '9dba60fa-0ac8-47b6-a81e-22a7c834f8f6'
+          status:
             type: string
-            example: successful
+            description: The current status of the task
+            example: WAITING
   
   EntityKYC:
     type: object
@@ -772,12 +887,20 @@ definitions:
     properties:
       task_id:
         type: string
-        description: The unique identifier of the task
-        example: b2b772f1-85fd-42ad-8116-06651128567c
+        description: The unique identifier for the task
+        example: '9dba60fa-0ac8-47b6-a81e-22a7c834f8f6'
       status:
         type: string
         description: The current status of the task
         example: WAITING
+      link:
+        type: string
+        description: The link to the task results
+        example: https://id.dataleon.ai/w/9dba60fasz
+      code:
+        type: string
+        description: The qr code for the task
+        example: iVBORw0KGgoAAAANSUhEUgAAAgg==
 
   Liasse:
     type: object
