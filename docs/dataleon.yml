@@ -370,7 +370,7 @@ paths:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/Entity'
+            $ref: '#/definitions/ResponseKYC'
         401:
           description: No valid API key provided.
         403:
@@ -438,7 +438,7 @@ paths:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/Entity'
+            $ref: '#/definitions/ResponseKYC'
         401:
           description: No valid API key provided.
         403:
@@ -501,7 +501,7 @@ paths:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/Entity'
+            $ref: '#/definitions/ResponseKYC'
         401:
           description: No valid API key provided.
         403:
@@ -539,7 +539,7 @@ paths:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/Entity'
+            $ref: '#/definitions/ResponseKYC'
         401:
           description: No valid API key provided.
         403:
@@ -571,7 +571,7 @@ paths:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/ApiResponse'
+            $ref: '#/definitions/ResponseKYC'
         401:
           description: No valid API key provided.
         403:
@@ -605,7 +605,7 @@ paths:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/ApiResponse'
+            $ref: '#/definitions/PreRequest'
         401:
           description: No valid API key provided.
         403:
