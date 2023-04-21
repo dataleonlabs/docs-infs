@@ -771,7 +771,7 @@ definitions:
           status:
             type: string
             description: The current status of the task
-            example: WAITING
+            example: PROCESSED
   
   KYC:
     type: object
@@ -950,7 +950,7 @@ definitions:
           status:
             type: string
             description: The current status of the task
-            example: WAITING
+            example: PROCESSED
   
 
   Request:
