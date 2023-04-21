@@ -782,30 +782,6 @@ definitions:
   Liasse:
     type: object
     properties:
-      blocks: 
-        type: array
-        items: 
-          type: object
-          properties: 
-            id: 
-              type: string
-              example: 5a9278a60cd211eba1b93a1350d1ea81
-            text: 
-              type: string
-              example: 12445
-            confidence: 
-              type: number
-              example: 0.9
-            bounding_box: 
-              type: array
-              items: 
-                type: array
-                items: 
-                  type: number
-                  example: 51
-      fulltext: 
-        type: string
-        example: total 12...
       entities: 
         type: array
         items: 
@@ -903,9 +879,6 @@ definitions:
                       items: 
                         type: number
                         example: 84.23780696094036
-      fulltext: 
-        type: string
-        example: RELEVE ET INFORMATION v
       entities: 
         type: array
         items: 
