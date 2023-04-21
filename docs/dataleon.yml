@@ -246,7 +246,7 @@ paths:
       security:
       - api_key: []
 
-  /pre-request:
+  /identity-request:
     post:
       tags:
       - KYC, KYB & AML
@@ -293,7 +293,7 @@ paths:
         description: User gender data on your system
         required: false
         type: string
-      - name: sms_phone_number
+      - name: phone_number
         in: formData
         description: User sms phone number to send link to user Exemple (+33766XXXXXX)
         required: false
@@ -585,7 +585,7 @@ paths:
       security:
       - api_key: []
 
-  /notify/{Id}:
+  /identity-notity/{Id}:
     post:
       tags:
       - KYC, KYB & AML
@@ -598,8 +598,23 @@ paths:
       parameters:
       - name: Id
         in: path
-        description: ID of task
+        description: ID of identity task
         required: true
+        type: string
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
+      - name: phone_number
+        in: formData
+        description: User sms phone number to send link to user Exemple (+33766XXXXXX)
+        required: false
+        type: string
+      - name: qr_code
+        in: formData
+        description: active QR code link ("true" or "false")
+        required: false
         type: string
       responses:
         200:
