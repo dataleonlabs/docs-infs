@@ -513,7 +513,7 @@ paths:
       security:
       - api_key: []
 
-  /kyb-verification:
+  /campany-verification:
     post:
       tags:
       - KYC, KYB & AML
