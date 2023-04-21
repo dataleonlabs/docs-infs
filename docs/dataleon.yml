@@ -551,40 +551,6 @@ paths:
       security:
       - api_key: []
 
-  /check/{Id}:
-    get:
-      tags:
-      - KYC, KYB & AML
-      summary: Retrieve the status and data of the current request.
-      description: This endpoint enables you to retrieve the status and data of the current KYC (Know Your Customer), KYB (Know Your Business), or AML (Anti-Money Laundering) request using the provided request ID. By providing the request ID, you can check the current status of the request, such as whether it is pending or complete, as well as retrieve any relevant data associated with the request, such as identification documents or proof of address. This endpoint is useful for tracking the progress of a request and retrieving data for further processing or analysis.
-      consumes:
-      - application/json
-      produces:
-      - application/json
-      parameters:
-      - name: Id
-        in: path
-        description: ID of task
-        required: true
-        type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/KYC'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        404:
-          description: The requested workfow doesn't exist.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
-
   /identity-notity/{Id}:
     post:
       tags:
@@ -638,11 +604,8 @@ paths:
     get:
       tags:
       - Operating
-      summary: Large file offline processing
-      description: Asynchronous ("offline") requests target longer documents. These types of requests start a long-running operations. When this operation finishes it stores output as a JSON file in a specified Young App Platform.
-      
-      
-        When the status field has the succeeded value, the JSON response contains the extracted text content from your image or document. 
+      summary: Retrieve the status and data of the request.
+      description: This feature allows you to retrieve the status and data of a request using the provided request ID. By providing the request ID, you can check the current status of the request, whether it is pending or complete, and retrieve any relevant data associated with the request. This feature is useful for tracking the progress of a request and obtaining data for further processing or analysis. 
       consumes:
       - application/json
       produces:
