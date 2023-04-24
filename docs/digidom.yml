@@ -453,7 +453,7 @@ definitions:
             action:
               type: string
               description: "The action performed on the detected entity"
-              example: "face"
+              example: "ubo"
             value:
               type: string
               description: "The value of the detected entity"
