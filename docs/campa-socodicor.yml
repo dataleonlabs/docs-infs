@@ -49,6 +49,11 @@ paths:
         description: Add your workspace_id
         required: true
         type: string
+      - name: spliting_document
+        in: formData
+        description: Manual splitting data
+        required: true
+        type: string
       - name: callback_url
         in: formData
         description: Offline processing
