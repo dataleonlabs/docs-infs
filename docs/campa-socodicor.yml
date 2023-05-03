@@ -52,7 +52,7 @@ paths:
       - name: spliting_document
         in: formData
         description: Manual splitting data
-        required: true
+        required: false
         type: string
       - name: callback_url
         in: formData
@@ -100,7 +100,7 @@ paths:
       - name: spliting_document
         in: formData
         description: Manual splitting data
-        required: true
+        required: false
         type: string
       - name: callback_url
         in: formData
