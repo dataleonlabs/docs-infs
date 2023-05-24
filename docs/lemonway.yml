@@ -15,7 +15,7 @@ info:
     - The PDF dimensions must be at most 17 x 17 inches, corresponding to legal or A3 paper sizes and smaller.
 
   version: 4.0.0
-  title: Lemonway - API Inference
+  title: Dataleon API Inference - Lemonway
   termsOfService: https://dataleon.ai/terms-of-use
   contact:
     email: support@dataleon.ai
