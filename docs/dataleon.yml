@@ -575,7 +575,7 @@ paths:
         type: string
       - name: type
         in: formData
-        description: Document type
+        description: Document type on your system (permis, carte-grise, releve-information)
         required: false
         type: string
       responses:
