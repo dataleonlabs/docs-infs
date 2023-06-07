@@ -551,6 +551,49 @@ paths:
       security:
       - api_key: []
 
+  /kyc-assurance:
+    post:
+      tags:
+      - KYC, KYB & AML
+      summary: Verify the documents for insurance and verification (car registration, driver's license, and driving record).
+      description: This endpoint allows you to verify and validate the documents required for insurance purposes, such as car registration documents (carte grise), driver's licenses, and driving records. By providing the necessary information and uploading the relevant documents, you can ensure compliance with KYC (Know Your Customer), KYB (Know Your Business), and AML (Anti-Money Laundering) procedures, as well as regulatory requirements in the insurance industry.
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
+      - name: type
+        in: formData
+        description: Document type
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/KYC'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+
   /identity-notity/{Id}:
     post:
       tags:
