@@ -70,6 +70,49 @@ paths:
       security:
       - api_key: []
 
+  /ava-capital/dev:
+    post:
+      tags:
+      - Financial
+      summary: Extract entities from an deck document using OCR.
+      description: This endpoint allows you to extract entities from an deck using OCR (Optical Character Recognition) technology. Entities can include information such as the customer name, invoice number, date, and total amount due. By sending a POST request to this endpoint with an invoice image, the OCR technology will extract the relevant entities and return them in a structured format. This endpoint is useful for automating the data extraction process and improving the accuracy of your accounting operations. The extracted entities can be used for tasks such as record-keeping, payment tracking, and tax purposes.
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
+      - name: callback_url
+        in: formData
+        description: Offline processing
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Result'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+
 securityDefinitions:
   api_key:
     type: apiKey
