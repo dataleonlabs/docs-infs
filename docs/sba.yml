@@ -49,11 +49,16 @@ paths:
         description: Offline processing
         required: false
         type: string
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
       responses:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/MultipleReceipt'
+            $ref: '#/definitions/Entity'
         401:
           description: No valid API key provided.
         403:
@@ -86,11 +91,16 @@ paths:
         description: Offline processing
         required: false
         type: string
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
       responses:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/MultipleReceipt'
+            $ref: '#/definitions/Entity'
         401:
           description: No valid API key provided.
         403:
