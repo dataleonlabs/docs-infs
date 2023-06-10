@@ -189,7 +189,7 @@ definitions:
     type: object
     properties:
       status:
-        example: "notStarted|running|failed|succeeded"
+        example: "VOID|WAITING|STARTED|RUNNING|PROCESSED|FAILED|ABORTED|EXPIRED"
         type: string 
 
 # Added by API Auto Mocking Plugin
