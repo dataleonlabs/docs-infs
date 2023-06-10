@@ -55,7 +55,7 @@ paths:
         type: string
       - name: callback_url
         in: formData
-        description: Offline processing
+        description: Offline processing URL
         required: false
         type: string
       responses:
@@ -98,7 +98,7 @@ paths:
         type: string
       - name: callback_url
         in: formData
-        description: Offline processing
+        description: Offline processing URL
         required: false
         type: string
       responses:
@@ -141,7 +141,7 @@ paths:
         type: string
       - name: callback_url
         in: formData
-        description: Offline processing
+        description: Offline processing URL
         required: false
         type: string
       responses:
@@ -184,7 +184,7 @@ paths:
         type: string
       - name: callback_url
         in: formData
-        description: Offline processing
+        description: Offline processing URL
         required: false
         type: string
       responses:
@@ -227,7 +227,7 @@ paths:
         type: string
       - name: callback_url
         in: formData
-        description: Offline processing
+        description: Offline processing URL
         required: false
         type: string
       responses:
@@ -270,7 +270,7 @@ paths:
         type: string
       - name: callback_url
         in: formData
-        description: Offline processing
+        description: Offline processing URL
         required: false
         type: string
       responses:
@@ -313,7 +313,7 @@ paths:
         type: string
       - name: callback_url
         in: formData
-        description: Offline processing
+        description: Offline processing URL
         required: false
         type: string
       responses:
@@ -351,7 +351,7 @@ paths:
         type: string
       - name: callback_url
         in: formData
-        description: Offline processing
+        description: Offline processing URL
         required: true
         type: string
       - name: path
@@ -802,7 +802,7 @@ paths:
         type: string
       - name: callback_url
         in: formData
-        description: Offline processing
+        description: Offline processing URL
         required: false
         type: string
       responses:
