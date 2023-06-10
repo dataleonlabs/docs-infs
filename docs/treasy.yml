@@ -113,6 +113,40 @@ paths:
       security:
       - api_key: []
 
+  /task/{Id}:
+    get:
+      tags:
+      - Operating
+      summary: Retrieve the status and data of the request.
+      description: This feature allows you to retrieve the status and data of a request using the provided request ID. By providing the request ID, you can check the current status of the request, whether it is pending or complete, and retrieve any relevant data associated with the request. This feature is useful for tracking the progress of a request and obtaining data for further processing or analysis. 
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Id
+        in: path
+        description: ID of task
+        required: true
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        404:
+          description: The requested workfow doesn't exist.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+
 securityDefinitions:
   api_key:
     type: apiKey
@@ -120,6 +154,12 @@ securityDefinitions:
     in: header
 
 definitions:
+  ApiResponse:
+    type: object
+    properties:
+      status:
+        example: "VOID|WAITING|STARTED|RUNNING|PROCESSED|FAILED|ABORTED|EXPIRED"
+        type: string
   Result:
     type: object
     properties:
