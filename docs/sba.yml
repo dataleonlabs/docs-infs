@@ -28,7 +28,7 @@ tags:
 # schemes:
 # - http
 paths:
-  /v3/pre-processing:
+  /sba/v3/pre-processing:
     post:
       tags:
       - Document Understanding v3
@@ -65,7 +65,7 @@ paths:
       security:
       - api_key: []
 
-  /v3/pre-processing/dev:
+  /sba/v3/pre-processing/dev:
     post:
       tags:
       - Document Understanding v3
