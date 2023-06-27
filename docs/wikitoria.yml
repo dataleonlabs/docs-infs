@@ -326,8 +326,8 @@ definitions:
         type: string
 
 # Added by API Auto Mocking Plugin
-host: inference.eu-west-1.dataleon.ai
+host: iron-loadbalancer-elbs-439944931.eu-west-3.elb.amazonaws.com
 schemes:
- - https
+ - http
 # Added by API Auto Mocking Plugin
 basePath: /
