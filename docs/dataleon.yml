@@ -205,7 +205,7 @@ paths:
   /identity-request:
     post:
       tags:
-      - KYC, KYB & AML
+      - KYC
       summary: Generate a unique URL for identifying your user.
       description: This endpoint enables your application to generate a unique identification URL that can be returned to initiate the KYC (Know Your Customer), KYB (Know Your Business), and AML (Anti-Money Laundering) processes.
       consumes:
@@ -278,7 +278,7 @@ paths:
   /proof-of-address:
     post:
       tags:
-      - KYC, KYB & AML
+      - KYC
       summary: Verify the current residential address of your user.
       description: This endpoint enables you to validate the current residence of your user by submitting a proof of address document, such as a utility bill or a bank statement. The proof of address document will be verified as part of the KYC (Know Your Customer), KYB (Know Your Business), and AML (Anti-Money Laundering) processes, ensuring compliance with regulatory requirements.
       consumes:
@@ -341,7 +341,7 @@ paths:
   /campany-verification:
     post:
       tags:
-      - KYC, KYB & AML
+      - KYB
       summary: Verify the Ultimate Beneficial Owner (UBO) of the company.
       description: This endpoint allows you to verify the Ultimate Beneficial Owner (UBO) of a company as part of the KYC (Know Your Customer), KYB (Know Your Business), and AML (Anti-Money Laundering) procedures. The UBO verification process ensures that the ownership structure of the company is transparent, and the identities of the individuals involved are verified, helping to prevent financial crimes such as money laundering and fraud.
       consumes:
@@ -376,10 +376,48 @@ paths:
       security:
       - api_key: []
 
+  /aml-screening:
+    post:
+      tags:
+      - AML
+      summary: Perform a one-time screening of users on PEPs, sanctions, watchlists data.
+      description: Utilize this endpoint to conduct a single comprehensive screening of users to identify any potential matches with Politically Exposed Persons (PEPs), sanctions lists, and watchlists data. This screening process plays a crucial role in ensuring compliance with regulations related to Anti-Money Laundering (AML), Know Your Customer (KYC), and Know Your Business (KYB) procedures.
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
+      - name: full_name
+        in: formData
+        description: User full name data on your system
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/KYC'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+
   /identity-notity/{Id}:
     post:
       tags:
-      - KYC, KYB & AML
+      - KYC
       summary: Send a new SMS to the end-user.
       description:  This endpoint allows you to send a new SMS notification to the end-user using the provided request ID. The notification is used to notify the user of any updates or actions required to complete a process. By sending a new SMS, you can ensure that the end-user receives the latest information and can take the necessary steps to complete the process. This endpoint is useful for ensuring that the end-user is informed and up-to-date throughout the process.
       consumes:
