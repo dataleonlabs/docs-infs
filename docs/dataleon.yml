@@ -23,10 +23,9 @@ info:
 tags:
 - name: KYC, KYB & AML
   description: APIs for extract verify identity document for KYC service
+  
 - name: Accounting
   description: APIs for extract data on accounting documents
-- name: Financial
-  description: APIs for extract data on financials documents
  
 # schemes:
 # - http
@@ -160,53 +159,10 @@ paths:
       security:
       - api_key: []
  
-  /liasse-fiscale:
-    post:
-      tags:
-      - Financial
-      summary: Generate financial reports for tax purposes.
-      description: This endpoint allows you to generate financial reports, known as "liasse fiscale" in French, for tax purposes. By sending a POST request to this endpoint with the necessary information, such as the accounting data and tax information, you can generate a report that summarizes the financial activity of your business for a given tax period. This report is required by French law for businesses operating in France and must be submitted to the tax authorities annually. This endpoint is useful for automating the process of generating financial reports and ensuring compliance with tax regulations.
-      consumes:
-      - application/json
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: file
-        in: formData
-        description: file to upload
-        required: true
-        type: file
-      - name: workspace_id
-        in: formData
-        description: Add your workspace_id
-        required: true
-        type: string
-      - name: callback_url
-        in: formData
-        description: Offline processing URL
-        required: false
-        type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/Liasse'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
-      
   /bank-statements:
     post:
       tags:
-      - Financial
+      - Accounting
       summary: Retrieve bank statement data for financial analysis and reporting.
       description: This endpoint allows you to retrieve bank statement data for financial analysis and reporting. By sending a POST request to this endpoint with the necessary information, such as the bank account number and time period, you can retrieve bank statement data that can be used for various financial services purposes, such as analyzing spending patterns, identifying fraud, or generating financial reports. This endpoint is particularly useful for financial institutions, credit bureaus, or other businesses that need to process large volumes of bank statement data. The retrieved data can be used to gain insights into customer behavior or improve financial reporting accuracy.
       consumes:
@@ -245,93 +201,7 @@ paths:
           description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
       security:
       - api_key: []
-  
-  /amortised-loan-schedule:
-    post:
-      tags:
-      - Financial
-      summary: Retrieve amortised loan schedule data for financial analysis.
-      description: The amortised loan schedule API enables extraction of loan schedules using Optical Character Recognition (OCR) technology. This API streamlines the integration of loan data extraction functionalities into applications.
-      consumes:
-      - application/json
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: file
-        in: formData
-        description: file to upload
-        required: true
-        type: file
-      - name: workspace_id
-        in: formData
-        description: Add your workspace_id
-        required: true
-        type: string
-      - name: callback_url
-        in: formData
-        description: Offline processing URL
-        required: false
-        type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/Transaction'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
-
-  /bank-statements:
-    post:
-      tags:
-      - Financial
-      summary: Retrieve bank statement data for financial analysis and reporting.
-      description: This endpoint allows you to retrieve bank statement data for financial analysis and reporting. By sending a POST request to this endpoint with the necessary information, such as the bank account number and time period, you can retrieve bank statement data that can be used for various financial services purposes, such as analyzing spending patterns, identifying fraud, or generating financial reports. This endpoint is particularly useful for financial institutions, credit bureaus, or other businesses that need to process large volumes of bank statement data. The retrieved data can be used to gain insights into customer behavior or improve financial reporting accuracy.
-      consumes:
-      - application/json
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: file
-        in: formData
-        description: file to upload
-        required: true
-        type: file
-      - name: workspace_id
-        in: formData
-        description: Add your workspace_id
-        required: true
-        type: string
-      - name: callback_url
-        in: formData
-        description: Offline processing URL
-        required: false
-        type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/Transaction'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
-
+    
   /identity-request:
     post:
       tags:
@@ -468,137 +338,6 @@ paths:
       security:
       - api_key: []
 
-  /iban-verification:
-    post:
-      tags:
-      - KYC, KYB & AML
-      summary: Verify the IBAN (International Bank Account Number) of your user.
-      description: This endpoint enables you to validate the current IBAN (International Bank Account Number) of your user by providing the necessary banking information. The IBAN validation process is an integral part of the KYC (Know Your Customer), KYB (Know Your Business), and AML (Anti-Money Laundering) procedures, ensuring that all regulatory requirements are met.
-      consumes:
-      - application/json
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: file
-        in: formData
-        description: file to upload
-        required: true
-        type: file
-      - name: workspace_id
-        in: formData
-        description: Add your workspace_id
-        required: true
-        type: string
-      - name: first_name
-        in: formData
-        description: User first name data on your system
-        required: false
-        type: string
-      - name: last_name
-        in: formData
-        description: User last name data on your system
-        required: false
-        type: string
-      - name: address
-        in: formData
-        description: User address data on your system
-        required: false
-        type: string
-      - name: company_name
-        in: formData
-        description: User company name on your system
-        required: false
-        type: string
-      - name: iban
-        in: formData
-        description: User iban on your system
-        required: true
-        type: string
-      - name: country
-        in: formData
-        description: User country on your system
-        required: false
-        type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/KYC'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
-
-  /identity-recognition:
-    post:
-      tags:
-      - KYC, KYB & AML
-      summary: Verify the identity document to ensure that the user has submitted the correct and valid document.
-      description: This endpoint enables you to verify the identity document submitted by the user and ensure that it is the correct and valid document. This process is an essential part of the KYC (Know Your Customer), KYB (Know Your Business), and AML (Anti-Money Laundering) procedures, ensuring that only authentic and verified identities are being used.
-      consumes:
-      - application/json
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: workspace_id
-        in: formData
-        description: Add your workspace_id
-        required: true
-        type: string
-      - name: first_name
-        in: formData
-        description: User first name data on your system
-        required: true
-        type: string
-      - name: last_name
-        in: formData
-        description: User last name data on your system
-        required: true
-        type: string
-      - name: country
-        in: formData
-        description: User country on your system
-        required: false
-        type: string
-      - name: gender
-        in: formData
-        description: User gender data on your system
-        required: false
-        type: string
-      - name: document_type
-        in: formData
-        description: Document type on your system (id, por, passport, dl)
-        required: false
-        type: string
-      - name: document_face
-        in: formData
-        description: Document type on your system (recto or verso)
-        required: false
-        type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/KYC'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
-
   /campany-verification:
     post:
       tags:
@@ -620,49 +359,6 @@ paths:
         in: formData
         description: Siren on your system
         required: true
-        type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/KYC'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
-
-  /kyc-assurance:
-    post:
-      tags:
-      - KYC, KYB & AML
-      summary: Verify the documents for insurance and verification (car registration, driver's license, and driving record).
-      description: This endpoint allows you to verify and validate the documents required for insurance purposes, such as car registration documents (carte grise), driver's licenses, and driving records. By providing the necessary information and uploading the relevant documents, you can ensure compliance with KYC (Know Your Customer), KYB (Know Your Business), and AML (Anti-Money Laundering) procedures, as well as regulatory requirements in the insurance industry.
-      consumes:
-      - application/json
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: file
-        in: formData
-        description: file to upload
-        required: true
-        type: file
-      - name: workspace_id
-        in: formData
-        description: Add your workspace_id
-        required: true
-        type: string
-      - name: type
-        in: formData
-        description: Document type on your system (permis, carte-grise, releve-information)
-        required: false
         type: string
       responses:
         200:
@@ -794,7 +490,6 @@ paths:
           description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
       security:
       - api_key: []
-
 
   /tasks:
     get:
