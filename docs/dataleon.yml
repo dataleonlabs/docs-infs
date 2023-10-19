@@ -52,11 +52,49 @@ paths:
         description: Add your workspace_id
         required: true
         type: string
+        default: "{{workspace_id}}"
       - name: callback_url
         in: formData
         description: Offline processing URL
         required: false
         type: string
+        default: "{{callback_url}}"
+      - name: table
+        in: formData
+        description: Table processing with column
+        required: false
+        type: string
+        default: "false"
+      - name: table_fulltext
+        in: formData
+        description: Table processing without column
+        required: false
+        type: string
+        default: "false"
+      - name: rotate
+        in: formData
+        description: Rotate document
+        required: false
+        type: string
+        default: "false"
+      - name: splitting_document
+        in: formData
+        description: split strategy activation
+        required: false
+        type: string
+        default: "false"
+      - name: split_strategy
+        in: formData
+        description: split strategy document
+        required: false
+        type: string
+        default: "id"
+      - name: dpi
+        in: formData
+        description: resolution conversation pdf to jpg
+        required: false
+        type: string
+        default: "100"
       responses:
         200:
           description: successful operation
@@ -95,11 +133,61 @@ paths:
         description: Add your workspace_id
         required: true
         type: string
+        default: "{{workspace_id}}"
       - name: callback_url
         in: formData
         description: Offline processing URL
         required: false
         type: string
+        default: "{{callback_url}}"
+      - name: rotate
+        in: formData
+        description: Rotate document
+        required: false
+        type: string
+        default: "false"
+      - name: cutting
+        in: formData
+        description: cutting receipt
+        required: false
+        type: string
+        default: "false"
+      - name: table
+        in: formData
+        description: Table processing with column
+        required: false
+        type: string
+        default: "false"
+      - name: table_fulltext
+        in: formData
+        description: Table processing without column
+        required: false
+        type: string
+        default: "false"
+      - name: rotate
+        in: formData
+        description: Rotate document
+        required: false
+        type: string
+        default: "false"
+      - name: splitting_document
+        in: formData
+        description: split strategy activation
+        required: false
+        type: string
+        default: "false"
+      - name: split_strategy
+        in: formData
+        description: split strategy document
+        required: false
+        type: string
+        default: "id"
+      - name: dpi
+        in: formData
+        description: resolution conversation pdf to jpg
+        required: false
+        type: string
+        default: "100"
       responses:
         200:
           description: successful operation
@@ -138,11 +226,25 @@ paths:
         description: Add your workspace_id
         required: true
         type: string
+        default: "{{workspace_id}}"
       - name: callback_url
         in: formData
         description: Offline processing URL
         required: false
         type: string
+        default: "{{callback_url}}"
+      - name: rotate
+        in: formData
+        description: Rotate document
+        required: false
+        type: string
+        default: "false"
+      - name: cutting
+        in: formData
+        description: cutting receipt
+        required: false
+        type: string
+        default: "false"
       responses:
         200:
           description: successful operation
@@ -158,13 +260,13 @@ paths:
           description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
       security:
       - api_key: []
- 
-  /bank-statements:
+
+  /liasse-fiscale:
     post:
       tags:
-      - Accounting
-      summary: Retrieve bank statement data for financial analysis and reporting.
-      description: This endpoint allows you to retrieve bank statement data for financial analysis and reporting. By sending a POST request to this endpoint with the necessary information, such as the bank account number and time period, you can retrieve bank statement data that can be used for various financial services purposes, such as analyzing spending patterns, identifying fraud, or generating financial reports. This endpoint is particularly useful for financial institutions, credit bureaus, or other businesses that need to process large volumes of bank statement data. The retrieved data can be used to gain insights into customer behavior or improve financial reporting accuracy.
+      - KYC, KYB & AML
+      summary: Generate financial reports for tax purposes.
+      description: This endpoint allows you to generate financial reports, known as "liasse fiscale" in French, for tax purposes. By sending a POST request to this endpoint with the necessary information, such as the accounting data and tax information, you can generate a report that summarizes the financial activity of your business for a given tax period. This report is required by French law for businesses operating in France and must be submitted to the tax authorities annually. This endpoint is useful for automating the process of generating financial reports and ensuring compliance with tax regulations.
       consumes:
       - application/json
       - multipart/form-data
@@ -183,9 +285,54 @@ paths:
         type: string
       - name: callback_url
         in: formData
+        description: Offline processing
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Liasse'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+      
+  /bank-statements:
+    post:
+      tags:
+      - KYC, KYB & AML
+      summary: Retrieve bank statement data for financial analysis and reporting.
+      description: This endpoint allows you to retrieve bank statement data for financial analysis and reporting. By sending a POST request to this endpoint with the necessary information, such as the bank account number and time period, you can retrieve bank statement data that can be used for various financial services purposes, such as analyzing spending patterns, identifying fraud, or generating financial reports. This endpoint is particularly useful for financial institutions, credit bureaus, or other businesses that need to process large volumes of bank statement data. The retrieved data can be used to gain insights into customer behavior or improve financial reporting accuracy.
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: file
+        in: formData
+        description: file to upload
+        required: true
+        type: file
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
+        default: "{{workspace_id}}"
+      - name: callback_url
+        in: formData
         description: Offline processing URL
         required: false
         type: string
+        default: "{{callback_url}}"
       responses:
         200:
           description: successful operation
@@ -219,6 +366,7 @@ paths:
         description: Add your workspace_id
         required: true
         type: string
+        default: "{{workspace_id}}"
       - name: callback_url
         in: formData
         description: Offline processing URL
@@ -297,6 +445,7 @@ paths:
         description: Add your workspace_id
         required: true
         type: string
+        default: "{{workspace_id}}"
       - name: first_name
         in: formData
         description: User first name data on your system
@@ -355,10 +504,55 @@ paths:
         description: Add your workspace_id
         required: true
         type: string
+        default: "{{workspace_id}}"
       - name: siren
         in: formData
         description: Siren on your system
         required: true
+        type: string
+      - name: document_type
+        in: formData
+        description: Send document type manually
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/KYC'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+
+  /insurance-auto:
+    post:
+      tags:
+      - Insurance
+      summary: Verify Vehicle Registration Document and Claims History.
+      description: This endpoint allows you to verify the authenticity of a Vehicle Registration Document (VRD) and the claims history, commonly referred to as a "Claims History Report." This verification process is essential for insurance purposes, ensuring accurate vehicle information and providing insights into the policyholder's claims history, helping insurance companies assess risk and prevent fraudulent claims.
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
+        default: "{{workspace_id}}"
+      - name: document_type
+        in: formData
+        description: Send document type manually
+        required: false
         type: string
       responses:
         200:
@@ -393,6 +587,7 @@ paths:
         description: Add your workspace_id
         required: true
         type: string
+        default: "{{workspace_id}}"
       - name: full_name
         in: formData
         description: User full name data on your system
@@ -435,6 +630,7 @@ paths:
         description: Add your workspace_id
         required: true
         type: string
+        default: "{{workspace_id}}"
       - name: phone_number
         in: formData
         description: User sms phone number to send link to user Exemple (+33766XXXXXX)
@@ -615,11 +811,13 @@ paths:
         description: Add your workspace_id
         required: true
         type: string
+        default: "{{workspace_id}}"
       - name: callback_url
         in: formData
         description: Offline processing URL
         required: false
         type: string
+        default: "{{callback_url}}"
       responses:
         200:
           description: successful operation
