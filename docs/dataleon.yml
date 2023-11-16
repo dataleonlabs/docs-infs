@@ -730,6 +730,51 @@ paths:
           description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
       security:
       - api_key: []
+    put:
+      tags:
+      - Operating
+      summary: Update the state, categoryId, and statuts of the request.
+      description: This functionality enables users to fetch the current status and pertinent data associated with a specific request using the provided request ID
+      consumes:
+      - application/json
+      produces:
+      - application/json
+      parameters:
+      - name: Id
+        in: path
+        description: ID of task
+        required: true
+        type: string
+      - name: state
+        in: formData
+        required: false
+        description: "PROCESSED|EXPIRED"
+        type: string
+      - name: category_id
+        in: formData
+        required: false
+        type: string
+      - name: category_id
+        in: formData
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ApiResponse'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        404:
+          description: The requested workfow doesn't exist.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
     delete:
       tags:
       - Operating
