@@ -754,7 +754,7 @@ paths:
         in: formData
         required: false
         type: string
-      - name: category_id
+      - name: status_id
         in: formData
         required: false
         type: string
