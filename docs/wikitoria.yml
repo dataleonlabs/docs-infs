@@ -104,6 +104,51 @@ paths:
       security:
       - api_key: []
 
+  /liasse-fiscale:
+    post:
+      tags:
+      - Accounting
+      summary: Generate financial reports for tax purposes.
+      description: This endpoint allows you to generate financial reports, known as "liasse fiscale" in French, for tax purposes. By sending a POST request to this endpoint with the necessary information, such as the accounting data and tax information, you can generate a report that summarizes the financial activity of your business for a given tax period. This report is required by French law for businesses operating in France and must be submitted to the tax authorities annually. This endpoint is useful for automating the process of generating financial reports and ensuring compliance with tax regulations.
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: file
+        in: formData
+        description: File to upload
+        required: true
+        type: file
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
+        default: "{{workspace_id}}"
+      - name: callback_url
+        in: formData
+        description: Offline processing
+        required: false
+        type: string
+        default: "{{callback_url}}"
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Liasse'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+
   /facture/vente:
     post:
       tags:
@@ -280,6 +325,36 @@ securityDefinitions:
     in: header
 
 definitions:
+  Liasse:
+    type: object
+    properties:
+      entities: 
+        type: array
+        items: 
+          type: object
+          properties: 
+            id: 
+              type: string
+              example: 5a9278a60cd211eba1b93a1350d1ea81
+            name: 
+              type: string
+              example: AA
+            text: 
+              type: string
+              example: 12445
+            value: 
+              type: number
+              example: 12445
+            confidence: 
+              type: number
+              example: 0.9
+            bounding_box: 
+              type: array
+              items: 
+                type: array
+                items: 
+                  type: number
+                  example: 51
   Accounting:
     type: object
     properties:
