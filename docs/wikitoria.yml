@@ -107,7 +107,7 @@ paths:
   /liasse-fiscale:
     post:
       tags:
-      - Accounting
+      - Financial
       summary: Generate financial reports for tax purposes.
       description: This endpoint allows you to generate financial reports, known as "liasse fiscale" in French, for tax purposes. By sending a POST request to this endpoint with the necessary information, such as the accounting data and tax information, you can generate a report that summarizes the financial activity of your business for a given tax period. This report is required by French law for businesses operating in France and must be submitted to the tax authorities annually. This endpoint is useful for automating the process of generating financial reports and ensuring compliance with tax regulations.
       consumes:
