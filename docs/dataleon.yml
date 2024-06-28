@@ -378,19 +378,19 @@ paths:
       - name: workspace_id
         in: formData
         description: Add your workspace_id
-        required: true
+        required: false
         type: string
         default: "{{workspace_id}}"
       - name: callback_url
         in: formData
         description: Offline processing URL
-        required: true
+        required: false
         type: string
         default: "{{callback_url}}"
       - name: callback_url_notification
         in: formData
         description: Offline processing URL notification when status updated
-        required: true
+        required: false
         type: string
         default: "{{callback_url_notification}}"
       - name: path
