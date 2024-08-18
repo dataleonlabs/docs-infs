@@ -24,7 +24,7 @@ tags:
 - name: KYC
   description: APIs for extract verify identity document for KYC service
   
-- name: KYB & AML
+- name: KYB
   description: APIs for extract verify identity document for KYB service
 
 - name: Accounting
@@ -33,6 +33,80 @@ tags:
 # schemes:
 # - http
 paths:
+
+  /company-request:
+    post:
+      tags:
+      - KYB
+      summary: Generate a unique URL for business verification.
+      description: This endpoint generates a unique URL for business verification. By sending a POST request, you receive a URL that can be used to initiate the KYB (Know Your Business) process, allowing for secure and efficient verification of business entities.
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: false
+        type: string
+        default: "{{workspace_id}}"
+      - name: callback_url
+        in: formData
+        description: Offline processing URL
+        required: false
+        type: string
+        default: "{{callback_url}}"
+      - name: callback_url_notification
+        in: formData
+        description: Offline processing URL notification when status updated
+        required: false
+        type: string
+        default: "{{callback_url_notification}}"
+      - name: path
+        in: formData
+        description: Application for processing data
+        required: true
+        type: string
+        default: /kyb-verification
+      - name: siren
+        in: formData
+        description: Company siren data on your system
+        required: true
+        type: string
+      - name: qr_code
+        in: formData
+        description: active QR code link ("true" or "false")
+        required: false
+        type: string
+      - name: client_id
+        in: formData
+        description: User id on your system
+        required: false
+        type: string
+      - name: tags
+        in: formData
+        description: Additionnals informations on JSON format
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Request'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+  
+  
   /invoice:
     post:
       tags:
@@ -166,7 +240,7 @@ paths:
   /liasse-fiscale:
     post:
       tags:
-      - KYB & AML
+      - KYB
       summary: Generate financial reports for tax purposes.
       description: This endpoint allows you to generate financial reports, known as "liasse fiscale" in French, for tax purposes. By sending a POST request to this endpoint with the necessary information, such as the accounting data and tax information, you can generate a report that summarizes the financial activity of your business for a given tax period. This report is required by French law for businesses operating in France and must be submitted to the tax authorities annually. This endpoint is useful for automating the process of generating financial reports and ensuring compliance with tax regulations.
       consumes:
@@ -210,7 +284,7 @@ paths:
   /liasse-fiscale/rt:
     post:
       tags:
-      - KYB & AML
+      - KYB
       summary: Generate financial reports for tax purposes in real time.
       description: This endpoint allows you to generate financial reports, known as "liasse fiscale" in French, for tax purposes. By sending a POST request to this endpoint with the necessary information, such as the accounting data and tax information, you can generate a report that summarizes the financial activity of your business for a given tax period. This report is required by French law for businesses operating in France and must be submitted to the tax authorities annually. This endpoint is useful for automating the process of generating financial reports and ensuring compliance with tax regulations.
       consumes:
@@ -248,7 +322,7 @@ paths:
   /bank-statements:
     post:
       tags:
-      - KYB & AML
+      - KYB
       - Accounting
       summary: Retrieve bank statement data for financial analysis and reporting.
       description: This endpoint allows you to retrieve bank statement data for financial analysis and reporting. By sending a POST request to this endpoint with the necessary information, such as the bank account number and time period, you can retrieve bank statement data that can be used for various financial services purposes, such as analyzing spending patterns, identifying fraud, or generating financial reports. This endpoint is particularly useful for financial institutions, credit bureaus, or other businesses that need to process large volumes of bank statement data. The retrieved data can be used to gain insights into customer behavior or improve financial reporting accuracy.
@@ -291,12 +365,12 @@ paths:
       security:
       - api_key: []
 
-  /proof-of-address:
+  /loan-amortization-schedule:
     post:
       tags:
-      - KYB & AML
-      summary: Verify the current residential address of your user.
-      description: This endpoint enables you to validate the current residence of your user by submitting a proof of address document, such as a utility bill or a bank statement. The proof of address document will be verified as part of the KYC (Know Your Customer), KYB (Know Your Business), and AML (Anti-Money Laundering) processes, ensuring compliance with regulatory requirements.
+      - KYB
+      summary: Retrieve loan amortization schedule data for financial analysis and reporting.
+      description: This endpoint retrieves loan amortization schedule data for financial analysis and reporting. You can send a POST request with details like loan account number and time period to get data for financial services, such as analyzing repayment patterns or generating reports. Useful for financial institutions and businesses needing to process large volumes of loan data.
       consumes:
       - application/json
       - multipart/form-data
@@ -314,37 +388,17 @@ paths:
         required: true
         type: string
         default: "{{workspace_id}}"
-      - name: full_name
+      - name: callback_url
         in: formData
-        description: User full name data on your system
+        description: Offline processing URL
         required: false
         type: string
-      - name: address
-        in: formData
-        description: User address data on your system
-        required: false
-        type: string
-      - name: company_name
-        in: formData
-        description: User company name on your system
-        required: false
-        type: string
-      - name: country
-        in: formData
-        description: User country on your system
-        required: false
-        type: string
-      - name: expirations_months
-        in: formData
-        description: Limitation expiration (3 months default)
-        required: false
-        type: string
-        default: 3
+        default: "{{callback_url}}"
       responses:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/KYC'
+            $ref: '#/definitions/Transaction'
         401:
           description: No valid API key provided.
         403:
@@ -356,88 +410,6 @@ paths:
       security:
       - api_key: []
 
-  /insurance-auto:
-    post:
-      tags:
-      - Insurance
-      summary: Verify Vehicle Registration Document and Claims History.
-      description: This endpoint allows you to verify the authenticity of a Vehicle Registration Document (VRD) and the claims history, commonly referred to as a "Claims History Report." This verification process is essential for insurance purposes, ensuring accurate vehicle information and providing insights into the policyholder's claims history, helping insurance companies assess risk and prevent fraudulent claims.
-      consumes:
-      - application/json
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: file
-        in: formData
-        description: File to upload
-        required: true
-        type: file
-      - name: workspace_id
-        in: formData
-        description: Add your workspace_id
-        required: true
-        type: string
-        default: "{{workspace_id}}"
-      - name: document_type
-        in: formData
-        description: Send document type manually
-        required: false
-        type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/KYC'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
-  
-  /aml-screening:
-    post:
-      tags:
-      - KYB & AML
-      summary: Perform a one-time screening of users on PEPs, sanctions, watchlists data.
-      description: Utilize this endpoint to conduct a single comprehensive screening of users to identify any potential matches with Politically Exposed Persons (PEPs), sanctions lists, and watchlists data. This screening process plays a crucial role in ensuring compliance with regulations related to Anti-Money Laundering (AML), Know Your Customer (KYC), and Know Your Business (KYB) procedures.
-      consumes:
-      - application/json
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: workspace_id
-        in: formData
-        description: Add your workspace_id
-        required: true
-        type: string
-        default: "{{workspace_id}}"
-      - name: full_name
-        in: formData
-        description: User full name data on your system
-        required: false
-        type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/KYC'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
 
   /identity-request:
     post:
@@ -526,6 +498,7 @@ paths:
       security:
       - api_key: []
   
+
   /identity-notity/{Id}:
     post:
       tags:
@@ -577,42 +550,67 @@ paths:
       security:
       - api_key: []
 
-  /{company}/{api}/{environment}:
+  /identity-document:
     post:
       tags:
-      - Custom API
-      summary: Allows users to interact with a custom API provided
-      description: This custom API endpoint allows users to interact with the specified company's API in a specific environment. By making a "POST" request to this endpoint, users can access and utilize the functionalities provided by the custom API.
+      - KYC
+      summary: Extract data from identity documents for verification.
+      description: This endpoint extracts data from identity documents submitted by users. By sending a POST request with the document, this endpoint processes and extracts relevant information for KYC (Know Your Customer) verification, enabling secure and efficient identity verification.
       consumes:
       - application/json
       - multipart/form-data
       produces:
       - application/json
       parameters:
-      - name: company
-        in: path
-        description: The name or identifier of the company whose API is being accessed
-        required: true
-        type: string
-      - name: api
-        in: path
-        description: The name or identifier of the specific API
-        required: true
-        type: string
-      - name: environment
-        in: path
-        description: The environment or context in which the API is being used, such as development, staging, or production
-        required: true
-        type: string
-      - name: file
-        in: formData
-        description: File to upload
-        required: true
-        type: file
       - name: workspace_id
         in: formData
         description: Add your workspace_id
-        required: true
+        required: false
+        type: string
+        default: "{{workspace_id}}"
+      - name: callback_url
+        in: formData
+        description: Offline processing URL
+        required: false
+        type: string
+        default: "{{callback_url}}"
+      - name: tags
+        in: formData
+        description: Additionnals informations on JSON format
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/KYC'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+  
+  /rib:
+    post:
+      tags:
+      - KYB
+      summary: Extract data from RIB for business verification.
+      description: This endpoint extracts data from RIB (Relevé d'Identité Bancaire) documents submitted for business verification. By sending a POST request with the RIB document, this endpoint processes and extracts relevant information for KYB (Know Your Business) purposes, facilitating accurate and efficient business verification.
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: false
         type: string
         default: "{{workspace_id}}"
       - name: callback_url
@@ -625,7 +623,113 @@ paths:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/Accounting'
+            $ref: '#/definitions/KYC'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+  
+  
+  /kbis:
+    post:
+      tags:
+      - KYB
+      summary: Extract data from KBIS for business verification.
+      description: This endpoint extracts data from KBIS (K-BIS) documents submitted for business verification. By sending a POST request with the KBIS document, this endpoint processes and extracts relevant information for KYB (Know Your Business) purposes, enabling accurate and efficient business verification.
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: false
+        type: string
+        default: "{{workspace_id}}"
+      - name: callback_url
+        in: formData
+        description: Offline processing URL
+        required: false
+        type: string
+        default: "{{callback_url}}"
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/KYC'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+  
+  /proof-of-address:
+    post:
+      tags:
+      - KYB
+      summary: Verify the current residential address of your user.
+      description: This endpoint enables you to validate the current residence of your user by submitting a proof of address document, such as a utility bill or a bank statement. The proof of address document will be verified as part of the KYC (Know Your Customer),  (Know Your Business), and AML (Anti-Money Laundering) processes, ensuring compliance with regulatory requirements.
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: file
+        in: formData
+        description: File to upload
+        required: true
+        type: file
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
+        default: "{{workspace_id}}"
+      - name: full_name
+        in: formData
+        description: User full name data on your system
+        required: false
+        type: string
+      - name: address
+        in: formData
+        description: User address data on your system
+        required: false
+        type: string
+      - name: company_name
+        in: formData
+        description: User company name on your system
+        required: false
+        type: string
+      - name: country
+        in: formData
+        description: User country on your system
+        required: false
+        type: string
+      - name: expirations_months
+        in: formData
+        description: Limitation expiration (3 months default)
+        required: false
+        type: string
+        default: 3
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/KYC'
         401:
           description: No valid API key provided.
         403:
