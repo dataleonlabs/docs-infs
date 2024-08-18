@@ -34,6 +34,187 @@ tags:
 # - http
 paths:
 
+  /identity-request:
+    post:
+      tags:
+      - KYC
+      summary: Generate a unique URL for identifying your user.
+      description: This endpoint enables your application to generate a unique identification URL that can be returned to initiate the KYC (Know Your Customer), KYB (Know Your Business), and AML (Anti-Money Laundering) processes.
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: false
+        type: string
+        default: "{{workspace_id}}"
+      - name: callback_url
+        in: formData
+        description: Offline processing URL
+        required: false
+        type: string
+        default: "{{callback_url}}"
+      - name: callback_url_notification
+        in: formData
+        description: Offline processing URL notification when status updated
+        required: false
+        type: string
+        default: "{{callback_url_notification}}"
+      - name: path
+        in: formData
+        description: Application for processing data
+        required: true
+        type: string
+        default: /kyc-verification
+      - name: first_name
+        in: formData
+        description: User first name data on your system
+        required: true
+        type: string
+      - name: last_name
+        in: formData
+        description: User last name data on your system
+        required: true
+        type: string
+      - name: country
+        in: formData
+        description: User country on your system
+        required: false
+        type: string
+      - name: phone_number
+        in: formData
+        description: User sms phone number to send link to user Exemple (+33766XXXXXX)
+        required: false
+        type: string
+      - name: qr_code
+        in: formData
+        description: active QR code link ("true" or "false")
+        required: false
+        type: string
+      - name: client_id
+        in: formData
+        description: User id on your system
+        required: false
+        type: string
+      - name: tags
+        in: formData
+        description: Additionnals informations on JSON format
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Request'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+  /identity-notity/{Id}:
+    post:
+      tags:
+      - KYC
+      summary: Send a new SMS to the end-user.
+      description:  This endpoint allows you to send a new SMS notification to the end-user using the provided request ID. The notification is used to notify the user of any updates or actions required to complete a process. By sending a new SMS, you can ensure that the end-user receives the latest information and can take the necessary steps to complete the process. This endpoint is useful for ensuring that the end-user is informed and up-to-date throughout the process.
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: Id
+        in: path
+        description: ID of identity task
+        required: true
+        type: string
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
+        default: "{{workspace_id}}"
+      - name: phone_number
+        in: formData
+        description: User sms phone number to send link to user Exemple (+33766XXXXXX)
+        required: false
+        type: string
+      - name: qr_code
+        in: formData
+        description: active QR code link ("true" or "false")
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Request'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        404:
+          description: The requested workfow doesn't exist.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+  /identity-document:
+    post:
+      tags:
+      - KYC
+      summary: Extract data from identity documents for verification.
+      description: This endpoint extracts data from identity documents submitted by users. By sending a POST request with the document, this endpoint processes and extracts relevant information for KYC (Know Your Customer) verification, enabling secure and efficient identity verification.
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: false
+        type: string
+        default: "{{workspace_id}}"
+      - name: callback_url
+        in: formData
+        description: Offline processing URL
+        required: false
+        type: string
+        default: "{{callback_url}}"
+      - name: tags
+        in: formData
+        description: Additionnals informations on JSON format
+        required: false
+        type: string
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/KYC'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+  
   /company-request:
     post:
       tags:
@@ -105,29 +286,22 @@ paths:
           description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
       security:
       - api_key: []
-  
-  
-  /invoice:
+  /rib:
     post:
       tags:
-      - Accounting
-      summary: Extract entities from an invoice using OCR.
-      description: This endpoint allows you to extract entities from an invoice using OCR (Optical Character Recognition) technology. Entities can include information such as the customer name, invoice number, date, and total amount due. By sending a POST request to this endpoint with an invoice image, the OCR technology will extract the relevant entities and return them in a structured format. This endpoint is useful for automating the data extraction process and improving the accuracy of your accounting operations. The extracted entities can be used for tasks such as record-keeping, payment tracking, and tax purposes.
+      - KYB
+      summary: Extract data from RIB for business verification.
+      description: This endpoint extracts data from RIB (Relevé d'Identité Bancaire) documents submitted for business verification. By sending a POST request with the RIB document, this endpoint processes and extracts relevant information for KYB (Know Your Business) purposes, facilitating accurate and efficient business verification.
       consumes:
       - application/json
       - multipart/form-data
       produces:
       - application/json
       parameters:
-      - name: file
-        in: formData
-        description: File to upload
-        required: true
-        type: file
       - name: workspace_id
         in: formData
         description: Add your workspace_id
-        required: true
+        required: false
         type: string
         default: "{{workspace_id}}"
       - name: callback_url
@@ -136,41 +310,11 @@ paths:
         required: false
         type: string
         default: "{{callback_url}}"
-      - name: table
-        in: formData
-        description: Table processing with column
-        required: false
-        type: string
-        default: "false"
-      - name: rotate
-        in: formData
-        description: Rotate document
-        required: false
-        type: string
-        default: "false"
-      - name: splitting_document
-        in: formData
-        description: split strategy activation
-        required: false
-        type: string
-        default: "false"
-      - name: split_strategy
-        in: formData
-        description: split strategy document
-        required: false
-        type: string
-        default: "id"
-      - name: tags
-        in: formData
-        description: Additionnals informations on JSON format
-        required: false
-        type: string
-        default: "[]"
       responses:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/Accounting'
+            $ref: '#/definitions/KYC'
         401:
           description: No valid API key provided.
         403:
@@ -181,27 +325,22 @@ paths:
           description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
       security:
       - api_key: []
-  /receipt:
+  /kbis:
     post:
       tags:
-      - Accounting
-      summary: Extract entities from receipts for accounting purposes.
-      description: This endpoint allows you to extract entities, such as vendor names, dates, and total amounts due, from receipts for accounting purposes. By sending a POST request to this endpoint with the necessary information, such as the image file of the receipt, you can perform OCR extraction to automate the data extraction process and improve the accuracy of your accounting operations. The extracted entities can be used for tasks such as record-keeping, payment tracking, and tax purposes. This endpoint is useful for streamlining your accounting process and reducing manual data entry.
+      - KYB
+      summary: Extract data from KBIS for business verification.
+      description: This endpoint extracts data from KBIS (K-BIS) documents submitted for business verification. By sending a POST request with the KBIS document, this endpoint processes and extracts relevant information for KYB (Know Your Business) purposes, enabling accurate and efficient business verification.
       consumes:
       - application/json
       - multipart/form-data
       produces:
       - application/json
       parameters:
-      - name: file
-        in: formData
-        description: File to upload
-        required: true
-        type: file
       - name: workspace_id
         in: formData
         description: Add your workspace_id
-        required: true
+        required: false
         type: string
         default: "{{workspace_id}}"
       - name: callback_url
@@ -210,23 +349,11 @@ paths:
         required: false
         type: string
         default: "{{callback_url}}"
-      - name: rotate
-        in: formData
-        description: Rotate document
-        required: false
-        type: string
-        default: "false"
-      - name: cutting
-        in: formData
-        description: cutting receipt
-        required: false
-        type: string
-        default: "false"
       responses:
         200:
           description: successful operation
           schema:
-            $ref: '#/definitions/Accounting'
+            $ref: '#/definitions/KYC'
         401:
           description: No valid API key provided.
         403:
@@ -364,7 +491,6 @@ paths:
           description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
       security:
       - api_key: []
-
   /loan-amortization-schedule:
     post:
       tags:
@@ -409,273 +535,6 @@ paths:
           description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
       security:
       - api_key: []
-
-
-  /identity-request:
-    post:
-      tags:
-      - KYC
-      summary: Generate a unique URL for identifying your user.
-      description: This endpoint enables your application to generate a unique identification URL that can be returned to initiate the KYC (Know Your Customer), KYB (Know Your Business), and AML (Anti-Money Laundering) processes.
-      consumes:
-      - application/json
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: workspace_id
-        in: formData
-        description: Add your workspace_id
-        required: false
-        type: string
-        default: "{{workspace_id}}"
-      - name: callback_url
-        in: formData
-        description: Offline processing URL
-        required: false
-        type: string
-        default: "{{callback_url}}"
-      - name: callback_url_notification
-        in: formData
-        description: Offline processing URL notification when status updated
-        required: false
-        type: string
-        default: "{{callback_url_notification}}"
-      - name: path
-        in: formData
-        description: Application for processing data
-        required: true
-        type: string
-        default: /kyc-verification
-      - name: first_name
-        in: formData
-        description: User first name data on your system
-        required: true
-        type: string
-      - name: last_name
-        in: formData
-        description: User last name data on your system
-        required: true
-        type: string
-      - name: country
-        in: formData
-        description: User country on your system
-        required: false
-        type: string
-      - name: phone_number
-        in: formData
-        description: User sms phone number to send link to user Exemple (+33766XXXXXX)
-        required: false
-        type: string
-      - name: qr_code
-        in: formData
-        description: active QR code link ("true" or "false")
-        required: false
-        type: string
-      - name: client_id
-        in: formData
-        description: User id on your system
-        required: false
-        type: string
-      - name: tags
-        in: formData
-        description: Additionnals informations on JSON format
-        required: false
-        type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/Request'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
-  
-
-  /identity-notity/{Id}:
-    post:
-      tags:
-      - KYC
-      summary: Send a new SMS to the end-user.
-      description:  This endpoint allows you to send a new SMS notification to the end-user using the provided request ID. The notification is used to notify the user of any updates or actions required to complete a process. By sending a new SMS, you can ensure that the end-user receives the latest information and can take the necessary steps to complete the process. This endpoint is useful for ensuring that the end-user is informed and up-to-date throughout the process.
-      consumes:
-      - application/json
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: Id
-        in: path
-        description: ID of identity task
-        required: true
-        type: string
-      - name: workspace_id
-        in: formData
-        description: Add your workspace_id
-        required: true
-        type: string
-        default: "{{workspace_id}}"
-      - name: phone_number
-        in: formData
-        description: User sms phone number to send link to user Exemple (+33766XXXXXX)
-        required: false
-        type: string
-      - name: qr_code
-        in: formData
-        description: active QR code link ("true" or "false")
-        required: false
-        type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/Request'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        404:
-          description: The requested workfow doesn't exist.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
-
-  /identity-document:
-    post:
-      tags:
-      - KYC
-      summary: Extract data from identity documents for verification.
-      description: This endpoint extracts data from identity documents submitted by users. By sending a POST request with the document, this endpoint processes and extracts relevant information for KYC (Know Your Customer) verification, enabling secure and efficient identity verification.
-      consumes:
-      - application/json
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: workspace_id
-        in: formData
-        description: Add your workspace_id
-        required: false
-        type: string
-        default: "{{workspace_id}}"
-      - name: callback_url
-        in: formData
-        description: Offline processing URL
-        required: false
-        type: string
-        default: "{{callback_url}}"
-      - name: tags
-        in: formData
-        description: Additionnals informations on JSON format
-        required: false
-        type: string
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/KYC'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
-  
-  /rib:
-    post:
-      tags:
-      - KYB
-      summary: Extract data from RIB for business verification.
-      description: This endpoint extracts data from RIB (Relevé d'Identité Bancaire) documents submitted for business verification. By sending a POST request with the RIB document, this endpoint processes and extracts relevant information for KYB (Know Your Business) purposes, facilitating accurate and efficient business verification.
-      consumes:
-      - application/json
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: workspace_id
-        in: formData
-        description: Add your workspace_id
-        required: false
-        type: string
-        default: "{{workspace_id}}"
-      - name: callback_url
-        in: formData
-        description: Offline processing URL
-        required: false
-        type: string
-        default: "{{callback_url}}"
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/KYC'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
-  
-  
-  /kbis:
-    post:
-      tags:
-      - KYB
-      summary: Extract data from KBIS for business verification.
-      description: This endpoint extracts data from KBIS (K-BIS) documents submitted for business verification. By sending a POST request with the KBIS document, this endpoint processes and extracts relevant information for KYB (Know Your Business) purposes, enabling accurate and efficient business verification.
-      consumes:
-      - application/json
-      - multipart/form-data
-      produces:
-      - application/json
-      parameters:
-      - name: workspace_id
-        in: formData
-        description: Add your workspace_id
-        required: false
-        type: string
-        default: "{{workspace_id}}"
-      - name: callback_url
-        in: formData
-        description: Offline processing URL
-        required: false
-        type: string
-        default: "{{callback_url}}"
-      responses:
-        200:
-          description: successful operation
-          schema:
-            $ref: '#/definitions/KYC'
-        401:
-          description: No valid API key provided.
-        403:
-          description: The API key doesn't have permissions to perform the request.
-        422:
-          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
-        429:
-          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
-      security:
-      - api_key: []
-  
   /proof-of-address:
     post:
       tags:
@@ -741,6 +600,137 @@ paths:
       security:
       - api_key: []
 
+  /invoice:
+    post:
+      tags:
+      - Accounting
+      summary: Extract entities from an invoice using OCR.
+      description: This endpoint allows you to extract entities from an invoice using OCR (Optical Character Recognition) technology. Entities can include information such as the customer name, invoice number, date, and total amount due. By sending a POST request to this endpoint with an invoice image, the OCR technology will extract the relevant entities and return them in a structured format. This endpoint is useful for automating the data extraction process and improving the accuracy of your accounting operations. The extracted entities can be used for tasks such as record-keeping, payment tracking, and tax purposes.
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: file
+        in: formData
+        description: File to upload
+        required: true
+        type: file
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
+        default: "{{workspace_id}}"
+      - name: callback_url
+        in: formData
+        description: Offline processing URL
+        required: false
+        type: string
+        default: "{{callback_url}}"
+      - name: table
+        in: formData
+        description: Table processing with column
+        required: false
+        type: string
+        default: "false"
+      - name: rotate
+        in: formData
+        description: Rotate document
+        required: false
+        type: string
+        default: "false"
+      - name: splitting_document
+        in: formData
+        description: split strategy activation
+        required: false
+        type: string
+        default: "false"
+      - name: split_strategy
+        in: formData
+        description: split strategy document
+        required: false
+        type: string
+        default: "id"
+      - name: tags
+        in: formData
+        description: Additionnals informations on JSON format
+        required: false
+        type: string
+        default: "[]"
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Accounting'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+  /receipt:
+    post:
+      tags:
+      - Accounting
+      summary: Extract entities from receipts for accounting purposes.
+      description: This endpoint allows you to extract entities, such as vendor names, dates, and total amounts due, from receipts for accounting purposes. By sending a POST request to this endpoint with the necessary information, such as the image file of the receipt, you can perform OCR extraction to automate the data extraction process and improve the accuracy of your accounting operations. The extracted entities can be used for tasks such as record-keeping, payment tracking, and tax purposes. This endpoint is useful for streamlining your accounting process and reducing manual data entry.
+      consumes:
+      - application/json
+      - multipart/form-data
+      produces:
+      - application/json
+      parameters:
+      - name: file
+        in: formData
+        description: File to upload
+        required: true
+        type: file
+      - name: workspace_id
+        in: formData
+        description: Add your workspace_id
+        required: true
+        type: string
+        default: "{{workspace_id}}"
+      - name: callback_url
+        in: formData
+        description: Offline processing URL
+        required: false
+        type: string
+        default: "{{callback_url}}"
+      - name: rotate
+        in: formData
+        description: Rotate document
+        required: false
+        type: string
+        default: "false"
+      - name: cutting
+        in: formData
+        description: cutting receipt
+        required: false
+        type: string
+        default: "false"
+      responses:
+        200:
+          description: successful operation
+          schema:
+            $ref: '#/definitions/Accounting'
+        401:
+          description: No valid API key provided.
+        403:
+          description: The API key doesn't have permissions to perform the request.
+        422:
+          description: The server understands the content type of the request entity (hence a 415 Unsupported Media Type status code is inappropriate),
+        429:
+          description: Too many requests hit the API too quickly. We recommend an exponential backoff of your requests.
+      security:
+      - api_key: []
+  
   /task/{Id}:
     get:
       tags:
