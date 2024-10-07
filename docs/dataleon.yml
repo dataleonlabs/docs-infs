@@ -208,24 +208,6 @@ paths:
         required: false
         type: string
         default: "{{workspace_id}}"
-      - name: callback_url
-        in: formData
-        description: Offline processing URL
-        required: false
-        type: string
-        default: "{{callback_url}}"
-      - name: callback_url_notification
-        in: formData
-        description: Offline processing URL notification when status updated
-        required: false
-        type: string
-        default: "{{callback_url_notification}}"
-      - name: path
-        in: formData
-        description: Application for processing data
-        required: true
-        type: string
-        default: /kyc-verification
       - name: first_name
         in: formData
         description: User first name data on your system
@@ -236,29 +218,9 @@ paths:
         description: User last name data on your system
         required: true
         type: string
-      - name: country
-        in: formData
-        description: User country on your system
-        required: false
-        type: string
       - name: birthday
         in: formData
         description: User birthday on your system
-        required: false
-        type: string
-      - name: phone_number
-        in: formData
-        description: User sms phone number to send link to user Exemple (+33766XXXXXX)
-        required: false
-        type: string
-      - name: qr_code
-        in: formData
-        description: active QR code link ("true" or "false")
-        required: false
-        type: string
-      - name: client_id
-        in: formData
-        description: User id on your system
         required: false
         type: string
       - name: tags
@@ -315,24 +277,6 @@ paths:
         required: false
         type: string
         default: "{{workspace_id}}"
-      - name: callback_url
-        in: formData
-        description: Offline processing URL
-        required: false
-        type: string
-        default: "{{callback_url}}"
-      - name: callback_url_notification
-        in: formData
-        description: Offline processing URL notification when status updated
-        required: false
-        type: string
-        default: "{{callback_url_notification}}"
-      - name: path
-        in: formData
-        description: Application for processing data
-        required: true
-        type: string
-        default: /kyc-verification
       - name: first_name
         in: formData
         description: User first name data on your system
@@ -343,29 +287,9 @@ paths:
         description: User last name data on your system
         required: true
         type: string
-      - name: country
-        in: formData
-        description: User country on your system
-        required: false
-        type: string
       - name: birthday
         in: formData
         description: User birthday on your system
-        required: false
-        type: string
-      - name: phone_number
-        in: formData
-        description: User sms phone number to send link to user Exemple (+33766XXXXXX)
-        required: false
-        type: string
-      - name: qr_code
-        in: formData
-        description: active QR code link ("true" or "false")
-        required: false
-        type: string
-      - name: client_id
-        in: formData
-        description: User id on your system
         required: false
         type: string
       - name: tags
